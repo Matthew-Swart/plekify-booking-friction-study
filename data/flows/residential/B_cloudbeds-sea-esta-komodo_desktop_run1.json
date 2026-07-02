@@ -1,0 +1,30 @@
+{
+  "system": "cloudbeds",
+  "property": "Sea Esta Komodo",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 1,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "errored",
+  "reason": "no cbId",
+  "clicks": 0,
+  "handoffs": 0,
+  "fields": 0,
+  "latencySec": 0,
+  "interruptions": 0,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 0,
+  "measuredLfi": 0,
+  "scoredLfi": 16.4,
+  "completionPct": 0,
+  "durationSec": 0,
+  "commit": "ea615ec",
+  "ts": "2026-07-02T12:31:17.442Z",
+  "origins": [],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

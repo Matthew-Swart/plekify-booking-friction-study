@@ -184,43 +184,79 @@ async function runOne(browser, prop, dates) {
 
     // 7. Fill guest-details (Step 1) -> Continue.
     // The Vue SPA re-renders the route after the URL change; wait for the form
-    // to be ready before filling or fill() can race the teardown and time out.
-    await page.locator('#firstName').waitFor({ state: 'visible', timeout: 30000 });
-    await page.locator('#firstName').fill('Test');
-    await page.locator('#lastName').fill('Booker');
-    await page.locator('#email').fill('frictionstudy+test@example.com');
-    await page.locator('#confirmEmail').fill('frictionstudy+test@example.com');
-    await page.locator('#phone').fill('2025551234');
-    await page.locator('#address1').fill('123 Test St');
-    await page.locator('#city').fill('Washington');
-    await page.locator('#state').fill('DC');
-    await page.locator('#postCode').fill('20002');
+    // to be ready. The cookie overlay can RE-MOUNT on /book (flaky) — nuke any
+    // lingering overlay via JS so it can't block the field clicks/fills, then
+    // fill each field (force=true tolerates any residual cover).
+    await page.locator('#firstName').waitFor({ state: 'attached', timeout: 30000 });
+    await page.evaluate(() => {
+      // Hard-remove the cookie overlay if it re-appeared on /book. (The accept
+      // button's Vue handler already set the consent cookie on the results page,
+      // so removing the overlay div here does not change consent state.)
+      document.querySelectorAll('.cookie-overlay, .cookie-banner, [role="dialog"][aria-label="Cookie policy"]')
+        .forEach(e => e.remove());
+    });
+
+    const fillField = async (sel, val) => {
+      await page.locator(sel).first().waitFor({ state: 'visible', timeout: 15000 }).catch(() => {});
+      await page.locator(sel).first().fill(val, { force: true }).catch(async () => {
+        // Last-resort: set value via DOM + dispatch input event so Vue picks it up.
+        await page.evaluate(({ sel, val }) => {
+          const el = document.querySelector(sel);
+          if (el) {
+            const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            setter ? setter.call(el, val) : (el.value = val);
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        }, { sel, val });
+      });
+    };
+    await fillField('#firstName', 'Test');
+    await fillField('#lastName', 'Booker');
+    await fillField('#email', 'frictionstudy+test@example.com');
+    await fillField('#confirmEmail', 'frictionstudy+test@example.com');
+    await fillField('#phone', '2025551234');
+    await fillField('#address1', '123 Test St');
+    await fillField('#city', 'Washington');
+    await fillField('#state', 'DC');
+    await fillField('#postCode', '20002');
+    // Helper: open a vue-select combobox by locator and click its nth option.
+    const pickVselectOption = async (combobox, which = 'first', text = null) => {
+      if ((await combobox.count()) === 0) return false;
+      await combobox.first().click({ force: true }).catch(() => {});
+      const menu = page.locator('.vs__dropdown-menu .vs__dropdown-option');
+      let target;
+      if (text) {
+        target = page.locator('.vs__dropdown-menu .vs__dropdown-option', { hasText: text }).first();
+      } else {
+        target = menu.first();
+      }
+      try {
+        await target.click({ timeout: 5000 });
+      } catch {
+        await target.click({ force: true });
+      }
+      return true;
+    };
+
     // Country is a vue-select (v-select) combobox. The autocomplete attribute
     // ("country-name") is the stable cross-property hook (IDs are generated
     // per page-load).
-    const country = page.locator('input[autocomplete="country-name"]');
-    if ((await country.count()) > 0) {
-      await country.fill('United States');
-      await page
-        .locator('.vs__dropdown-menu .vs__dropdown-option', { hasText: 'United States' })
-        .first()
-        .click();
-    }
+    await pickVselectOption(page.locator('input[autocomplete="country-name"]'), 'first', 'United States');
     // Some properties add EXTRA required v-select dropdowns (Nantucket:
     // "How did you hear about us?" -> placeholder="Please select...", and
     // "Planned arrival time?" -> placeholder="Select time"). Pick the first
     // option of each — the value is irrelevant; we only need to satisfy
     // client-side validation to reach the payment page.
     for (const placeholder of ['Please select...', 'Select time']) {
-      const sel = page.locator(`input[placeholder="${placeholder}"]`);
-      if ((await sel.count()) > 0) {
-        await sel.click();
-        await page.locator('.vs__dropdown-menu .vs__dropdown-option').first().click();
-      }
+      await pickVselectOption(page.locator(`input[placeholder="${placeholder}"]`));
     }
     result.steps.push('fill guest details');
 
-    await page.locator('button[data-sm-test="guest-details-continue"]').click();
+    const continueBtn = page.locator('button[data-sm-test="guest-details-continue"]');
+    await continueBtn.click({ timeout: 15000 }).catch(async () => {
+      await continueBtn.click({ force: true });
+    });
     result.steps.push('click guest-details Continue');
 
     // OPTIONAL Extras upsell step. Some properties (Nantucket) insert a

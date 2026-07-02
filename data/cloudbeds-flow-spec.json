@@ -1,154 +1,124 @@
 {
   "system": "cloudbeds",
-  "deepLinkPattern": "https://hotels.cloudbeds.com/en/reservation/SoRbvN?date=2026-08-16&nights=2&adults=2",
-  "deepLinkFormat": "date+nights",
-  "canonicalReservationPattern": "https://hotels.cloudbeds.com/reservation/<PROPERTY_ID>",
+  "engine": "Cloudbeds 'myfrontdesk' booking engine — modern Chakra-UI build (React). Served from hotels.cloudbeds.com.",
+  "canonicalReservationPattern": "https://hotels.cloudbeds.com/reservation/<PROPERTY_ID>  (redirects to /en/reservation/<PROPERTY_ID> and appends ?currency=...)",
+  "propertyIds": {
+    "Saltline Hotel": "Cy0z7M",
+    "Fatwave Surf Resort": "SoRbvN",
+    "Sea Esta Komodo": "UNKNOWN — homepage behind SiteGround sgcaptcha interstitial; not reached headlessly"
+  },
+  "deepLinkPattern": "https://hotels.cloudbeds.com/reservation/<PROPERTY_ID>?checkin=YYYY-MM-DD&checkout=YYYY-MM-DD&adults=2",
+  "deepLinkFormat": "checkin + checkout (ISO date). Confirmed working on Saltline (Cy0z7M) and Fatwave (SoRbvN). Dates populate the Check-in/Check-out buttons AND auto-fire the search, so room cards render immediately — NO calendar interaction required.",
+  "deepLinkVerified": true,
+  "deepLinkNotes": "?date=...&nights=N does NOT work (UI stays empty, Search button disabled). The working pair is checkin + checkout. &adults=2 is accepted by the URL but the guest stepper still renders '1 Guest' (the param is read for availability pricing but not reflected in the stepper UI) — non-blocking, search returns rooms regardless.",
   "iframe": {
     "present": true,
-    "selector": null,
-    "notes": "mixed: some sites embed in iframe, others full-page redirect"
+    "selector": "iframe[src*=\"hotels.cloudbeds.com\"]",
+    "notes": "Cloudbeds offers both an embeddable widget iframe AND a full-page redirect. For the friction test, BYPASS the homepage entirely and goto the canonical reservation URL directly (deep-link). Saltline embeds a widget (a#cb-widget-submit 'CHECK AVAILABILITY' on the homepage). Fatwave 'Book Now' links out to a full-page reservation URL.",
+    "recommendation": "Do NOT drive the homepage iframe. Use the deep-link directly — faster, deterministic, avoids per-site Book-affordance selector variance."
   },
   "cookieDismiss": {
-    "selector": "button:has-text(\"Accept\")"
+    "selector": "button:has-text(\"Accept\")",
+    "notes": "Only relevant on the hotel homepage (Saltline). Not present on the cloudbeds.com engine page. Irrelevant when deep-linking."
+  },
+  "captcha": {
+    "visibleOnEngine": false,
+    "notes": "The Cloudbeds reservation engine shows NO visible CAPTCHA, NO Cloudflare Turnstile, NO reCAPTCHA widget, NO challenge cookie (verified headlessly). navigator.webdriver=false under playwright-extra+stealth. Individual hotel homepages may sit behind a host-level bot-wall: Sea Esta Komodo returns a SiteGround sgcaptcha interstitial (.well-known/sgcaptcha/) that blocks the homepage headlessly — another reason to deep-link straight to hotels.cloudbeds.com."
   },
   "steps": [
     {
+      "n": 1,
+      "action": "goto",
+      "selector": null,
+      "desc": "Load the date-prefilled reservation URL directly (bypass homepage). Dates auto-fill + search auto-runs.",
+      "value": "https://hotels.cloudbeds.com/reservation/<PROPERTY_ID>?checkin=<ISO+45d>&checkout=<ISO+47d>&adults=2",
+      "waitFor": "button.cb-select-button (the per-rate 'Add' button) — proves room results rendered",
+      "confirmedOn": "Saltline Cy0z7M, Fatwave SoRbvN"
+    },
+    {
+      "n": 2,
+      "action": "waitFor",
+      "selector": "button.cb-select-button",
+      "desc": "Wait for the first rate-plan 'Add' button to be visible (room availability has loaded). Typically 5-7s after goto under networkidle.",
+      "fallbackSelector": ".cb-accommodation-card, .cb-rate-plan"
+    },
+    {
+      "n": 3,
+      "action": "verify",
+      "selector": "button[aria-label^=\"Check-in,\"]",
+      "desc": "Optional sanity check: the Check-in button's aria-label reads 'Check-in, <Mon DD, YYYY>' (proves the deep-link dates applied).",
+      "altSelector": "the two buttons with class 'chakra-button d-1nt62lc' whose text is a formatted date"
+    },
+    {
+      "n": 4,
       "action": "click",
-      "selector": "role=link[name=\"Book\"]",
-      "desc": "homepage Book link (href=https://facebook.com/SALTLINEHOTEL)"
+      "selector": "button.cb-select-button",
+      "desc": "Click the first available rate's 'Add' button to add the room to the cart. aria-label is 'Add <Rate Name>' (e.g. 'Add Standard Rate').",
+      "BLOCKED": true,
+      "blockReason": "Click is delivered to a visible, enabled button but the React onClick handler does NOT fire under Playwright — confirmed across 6 strategies (plain click, force, real mouse down/up, focus+Enter, native PointerEvent+MouseEvent dispatch, parent-row click). Zero network requests fire on click (delta 0). Cart stays 'No Accommodations Added'. No CAPTCHA/Turnstile present. Consistent with an isTrusted / trusted-event guard in Cloudbeds' Chakra cart code that silently drops synthetic events. This is an AGENT-BLOCK, not a selector problem.",
+      "cartSelector": ".cb-shopping-cart (text 'No Accommodations Added' = empty; populated shows room name + price + a checkout button)",
+      "impact": "Cannot proceed past add-to-cart. Steps 5-7 are the documented human-flow selectors, observed but NOT reachable headlessly."
+    },
+    {
+      "n": 5,
+      "action": "click",
+      "selector": "TBD — cart checkout button (text expected to be 'Reserve Now' / 'Checkout' / 'Continue'); only renders after a room is successfully added",
+      "desc": "Documented next step after a successful Add: the .cb-shopping-cart sidebar populates and reveals a checkout CTA. Selector not confirmable headlessly because step 4 is blocked."
+    },
+    {
+      "n": 6,
+      "action": "fill",
+      "selector": "Guest-details form fields (First name / Last name / Email / Phone) — standard Chakra inputs",
+      "desc": "Cloudbeds collects guest details before payment. Specific input names not captured (blocked upstream)."
+    },
+    {
+      "n": 7,
+      "action": "waitForPayment",
+      "selector": null,
+      "desc": "Payment page indicators to look for: URL segment /payment OR /confirm; a card-number iframe (Stripe Elements / Cloudbeds hosted card field); input[autocomplete='cc-number']. NOT reached headlessly.",
+      "expectedPaymentIndicators": [
+        "URL contains /payment or /confirm",
+        "iframe with src matching /js.stripe.com|payments.cloudbeds|spreedly|recurly/",
+        "input[autocomplete='cc-number'] or [data-elements-stable-field-name='cardNumber']"
+      ]
     }
   ],
-  "captchaObserved": false,
   "paymentReached": false,
   "paymentIndicator": null,
-  "perProperty": [
-    {
-      "property": "Saltline Hotel",
-      "homepageUrl": "https://www.saltlinehotel.com/",
-      "bookingEngineUrl": null,
-      "iframe": {
-        "present": false,
-        "selector": null
-      },
-      "cookieDismiss": {
-        "selector": "button:has-text(\"Accept\")"
-      },
-      "dateParams": {
-        "works": false,
-        "sampleUrl": null,
-        "format": null
-      },
-      "captcha": {
-        "visible": false,
-        "kind": null
-      },
-      "steps": [
-        {
-          "action": "click",
-          "selector": "role=link[name=\"Book\"]",
-          "desc": "homepage Book link (href=https://facebook.com/SALTLINEHOTEL)"
-        }
-      ],
-      "paymentReached": false,
-      "paymentIndicator": null,
-      "gotchas": [],
-      "errors": [
-        "no cloudbeds engine reached",
-        "TypeError: Cannot read properties of undefined (reading 'vis')"
-      ],
-      "navHistory": [
-        "https://www.saltlinehotel.com/"
-      ]
-    },
-    {
-      "property": "Sea Esta Komodo",
-      "homepageUrl": "https://seaestakomodo.com/",
-      "bookingEngineUrl": null,
-      "iframe": {
-        "present": false,
-        "selector": null
-      },
-      "cookieDismiss": {
-        "selector": null
-      },
-      "dateParams": {
-        "works": false,
-        "sampleUrl": null,
-        "format": null
-      },
-      "captcha": {
-        "visible": false,
-        "kind": null
-      },
-      "steps": [],
-      "paymentReached": false,
-      "paymentIndicator": null,
-      "gotchas": [],
-      "errors": [
-        "no Book affordance found on homepage",
-        "no cloudbeds engine reached",
-        "TypeError: Cannot read properties of undefined (reading 'vis')"
-      ],
-      "navHistory": [
-        "https://seaestakomodo.com/",
-        "https://seaestakomodo.com/.well-known/sgcaptcha/?r=%2F&y=ipr:102.182.190.248:1782993146.865",
-        "https://seaestakomodo.com/.well-known/sgcaptcha/?r=%2F&sol=MjE6MTc4Mjk5MzE0NzozMjZhNzU3OTpjNGFkNWMyMjI2NDhiZGMxM2FkZjQ2ZTk4MDJjM2U0NmMxODg5ZDNiZDc0ZmM4YTgyZDEzOGUwMWUxZmJhOWFkOqjxhg%3D%3D&s=3403:1657910",
-        "https://seaestakomodo.com/"
-      ]
-    },
-    {
-      "property": "Fatwave Surf Resort",
-      "homepageUrl": "https://www.fatwavesurfresort.com/",
-      "bookingEngineUrl": "https://hotels.cloudbeds.com/en/reservation/SoRbvN?currency=php",
-      "iframe": {
-        "present": true,
-        "selector": null
-      },
-      "cookieDismiss": {
-        "selector": null
-      },
-      "dateParams": {
-        "works": true,
-        "sampleUrl": "https://hotels.cloudbeds.com/en/reservation/SoRbvN?date=2026-08-16&nights=2&adults=2",
-        "format": "date+nights"
-      },
-      "captcha": {
-        "visible": false,
-        "kind": null
-      },
-      "steps": [
-        {
-          "action": "click",
-          "selector": "text=\"Book Now\"",
-          "desc": "homepage Book affordance (href=https://hotels.cloudbeds.com/reservation/SoRbvN)"
-        }
-      ],
-      "paymentReached": false,
-      "paymentIndicator": null,
-      "gotchas": [
-        "stopped at: https://hotels.cloudbeds.com/en/reservation/SoRbvN?currency=php"
-      ],
-      "errors": [
-        "no room Book button found"
-      ],
-      "navHistory": [
-        "https://www.fatwavesurfresort.com/",
-        "https://hotels.cloudbeds.com/reservation/SoRbvN",
-        "https://hotels.cloudbeds.com/reservation/SoRbvN",
-        "https://hotels.cloudbeds.com/en/reservation/SoRbvN",
-        "https://hotels.cloudbeds.com/reservation/SoRbvN?currency=php",
-        "https://hotels.cloudbeds.com/en/reservation/SoRbvN?currency=php"
-      ]
-    }
-  ],
+  "paymentReachedReason": "Blocked at add-to-cart (step 4). The Cloudbeds Chakra booking engine silently drops synthetic 'Add' clicks — the React onClick never fires (0 network requests, cart stays empty) despite a visible+enabled button and no CAPTCHA/Turnstile. This is an isTrusted-style trusted-event guard — a deliberate agent-resistance measure. Calendar, search, and room-listing all work headlessly; only cart mutation is blocked.",
   "gotchas": [
-    "stopped at: https://hotels.cloudbeds.com/en/reservation/SoRbvN?currency=php",
-    "Cloudbeds reservation ID is per-property in the path; date query params work (date=YYYY-MM-DD&nights=N&adults=N)",
-    "Calendar day cells use [data-date=\"YYYY-MM-DD\"]; advance month with [class*=\"next\"] / aria-label*=\"ext\"",
-    "When sold out for the test dates, no Book button appears — use rolling dates T+45/T+47"
+    "DEEP-LINK IS THE WAY IN: https://hotels.cloudbeds.com/reservation/<ID>?checkin=YYYY-MM-DD&checkout=YYYY-MM-DD&adults=2 — pre-fills dates, auto-runs search, renders room cards. Skip the homepage entirely. (The older ?date=&nights= format does NOT work on the Chakra engine.)",
+    "Date format in the URL is strict ISO: YYYY-MM-DD (e.g. 2026-08-16).",
+    "&adults=2 in the URL prices availability for 2 pax but the on-page guest stepper still shows '1 Guest' (cosmetic mismatch, non-blocking).",
+    "Calendar day cells (if ever needed) are div[data-date='YYYY-MM-DD'].chakra-stack.day with aria-disabled='true' on blocked days; month nav has no aria-label match for 'next' (use a button whose aria-label/text matches /^next|>|›|→/).",
+    "Room-selection button text is 'Add' (NOT 'Book Now'/'Reserve'/'Select'). Selector: button.cb-select-button, aria-label 'Add <Rate Name>'.",
+    "AGENT-BLOCK at add-to-cart: 6 click strategies all fail to mutate the cart. Treat Cloudbeds Chakra as NOT automatable past room-selection for the friction test — record steps 1-4 as the reachable frontier and mark the payment step as agent-blocked.",
+    "body.innerText on the engine page includes the JSON-LD <script> schema (LodgingBusiness) as the first ~600 chars — when scraping visible text, filter to specific tags (h1-h4, p, button, label) or strip <script> first.",
+    "Per-site Book affordance on the homepage varies wildly: Saltline = a#cb-widget-submit 'CHECK AVAILABILITY' (Cloudbeds widget); Fatwave = 'Book Now' link. This is WHY deep-linking is strongly preferred over a homepage-driven flow.",
+    "Sea Esta Komodo homepage is gated by a SiteGround sgcaptcha interstitial (.well-known/sgcaptcha/) — headless cannot pass it. Reservation property ID not recovered. To include Sea Esta, find its cloudbeds reservation ID another way (page source via a residential/headed fetch, or the hotel's booking link) then deep-link.",
+    "Currency is auto-appended by the engine (?currency=usd for Saltline, ?currency=php for Fatwave) based on geo/IP — harmless, do not set it manually."
   ],
   "testDates": {
     "checkin": "2026-08-16",
-    "checkout": "2026-08-18"
+    "checkout": "2026-08-18",
+    "rule": "T+45d / T+47d (Protocol v2 §4 rolling Study-B dates)"
+  },
+  "perPropertyConfirmation": {
+    "saltlineHotel": {
+      "homepageBookLink": "a#cb-widget-submit (text 'CHECK AVAILABILITY', href https://hotels.cloudbeds.com/reservation/Cy0z7M)",
+      "deepLinkWorked": true,
+      "roomsRendered": true
+    },
+    "fatwaveSurfResort": {
+      "homepageBookLink": "text 'Book Now' (href https://hotels.cloudbeds.com/reservation/SoRbvN)",
+      "deepLinkWorked": true,
+      "roomsRendered": true,
+      "addBlocked": true
+    },
+    "seaEstaKomodo": {
+      "homepageBlocked": "SiteGround sgcaptcha interstitial (.well-known/sgcaptcha/)",
+      "reservationId": null,
+      "deepLinkWorked": "n/a"
+    }
   }
 }

@@ -87,9 +87,20 @@ export class Metrics {
   }
 
   async detectInterruptions(page) {
+    // VISIBLE challenge only — an invisible/score-based reCAPTCHA (e.g. SiteMinder's
+    // size=invisible) never challenges the user, so it is NOT an interruption. Matches
+    // the visible-only logic in handlers.detectCaptcha and the ARS CW probe.
     try {
-      const lower = (await page.content()).toLowerCase();
-      if (/g-recaptcha|www\.google\.com\/recaptcha|h-captcha|hcaptcha\.com|cf-turnstile|challenges\.cloudflare\.com/.test(lower)) this.markInterruption('captcha');
+      const det = await page.evaluate(() => {
+        const ifr = Array.from(document.querySelectorAll('iframe'));
+        const visCaptcha = ifr.some((f) => /recaptcha|hcaptcha|challenges\.cloudflare|turnstile/.test(f.src || '') && f.getBoundingClientRect().width > 60);
+        // visible widgets only — exclude invisible/score-based reCAPTCHA (data-size=invisible)
+        const widget = !!document.querySelector('.cf-turnstile, .h-captcha, .g-recaptcha:not([data-size="invisible"]):not([data-size="hide"])');
+        const body = (document.body && document.body.innerText) || '';
+        const text = /verify you are human|just a moment|checking your browser|are you a robot|access denied|sorry, you have been blocked/i.test(body);
+        return visCaptcha || widget || text;
+      });
+      if (det) this.markInterruption('captcha');
     } catch { /* ignore */ }
   }
 

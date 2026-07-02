@@ -157,7 +157,7 @@ async function probeCW(page, bookingUrl) {
       const visCaptcha = ifr.some((f) =>
         /recaptcha|hcaptcha|challenges\.cloudflare|turnstile/.test(f.src || '') &&
         f.getBoundingClientRect().width > 60);
-      const widget = !!document.querySelector('.cf-turnstile, .h-captcha, [data-sitekey]');
+      const widget = !!document.querySelector('.cf-turnstile, .h-captcha, .g-recaptcha:not([data-size="invisible"]):not([data-size="hide"])');
       const body = (document.body && document.body.innerText) || '';
       const text = /verify you are human|just a moment|checking your browser|are you a robot|access denied|sorry, you have been blocked/i.test(body);
       const defensive = /recaptcha\/api\.js|hcaptcha\.com\/1\/api\.js|challenges\.cloudflare\.com\/turnstile/.test(document.documentElement.outerHTML || '');

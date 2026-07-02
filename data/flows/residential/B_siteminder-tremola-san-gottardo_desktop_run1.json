@@ -1,0 +1,33 @@
+{
+  "system": "siteminder",
+  "property": "Tremola-San Gottardo",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 1,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "redirected-off-domain",
+  "reason": "payment-on-third-party-domain",
+  "clicks": 4,
+  "handoffs": 1,
+  "fields": 0,
+  "latencySec": 2.18,
+  "interruptions": 1,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 2,
+  "measuredLfi": 22.4,
+  "scoredLfi": 22.4,
+  "completionPct": 8.4,
+  "durationSec": 36.1,
+  "commit": "ea615ec",
+  "ts": "2026-07-02T12:29:32.594Z",
+  "origins": [
+    "https://www.tremola-sangottardo.ch",
+    "https://direct-book.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

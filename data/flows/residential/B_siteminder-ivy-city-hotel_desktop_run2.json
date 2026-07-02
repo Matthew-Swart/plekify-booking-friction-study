@@ -1,0 +1,33 @@
+{
+  "system": "siteminder",
+  "property": "Ivy City Hotel",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 2,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "redirected-off-domain",
+  "reason": "payment-on-third-party-domain",
+  "clicks": 4,
+  "handoffs": 1,
+  "fields": 0,
+  "latencySec": 2.28,
+  "interruptions": 1,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 2,
+  "measuredLfi": 22.4,
+  "scoredLfi": 22.4,
+  "completionPct": 8.4,
+  "durationSec": 37.1,
+  "commit": "ea615ec",
+  "ts": "2026-07-02T12:27:30.570Z",
+  "origins": [
+    "https://www.ivycityhotel.com",
+    "https://direct-book.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

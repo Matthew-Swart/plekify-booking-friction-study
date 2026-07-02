@@ -99,7 +99,7 @@ export class BaseHandler {
       const det = await this.page.evaluate(() => {
         const ifr = Array.from(document.querySelectorAll('iframe'));
         const visCaptcha = ifr.some((f) => /recaptcha|hcaptcha|challenges\.cloudflare|turnstile/.test(f.src || '') && f.getBoundingClientRect().width > 60);
-        const widget = !!document.querySelector('.cf-turnstile, .h-captcha, [data-sitekey]');
+        const widget = !!document.querySelector('.cf-turnstile, .h-captcha, .g-recaptcha:not([data-size="invisible"]):not([data-size="hide"])');
         const body = (document.body && document.body.innerText) || '';
         const text = /verify you are human|just a moment|checking your browser|are you a robot|access denied|sorry, you have been blocked/i.test(body);
         return visCaptcha || widget || text;

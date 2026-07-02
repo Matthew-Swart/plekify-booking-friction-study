@@ -1,0 +1,125 @@
+{
+  "system": "mews",
+  "systemDetail": "Mews Distributor — React SPA booking engine. The whole flow is a same-origin iframe at https://app.mews.com/distributor/{uuid}; URL never changes between steps.",
+  "verifiedDate": "2026-07-02",
+  "verifiedProperties": {
+    "musa":     { "url": "https://app.mews.com/distributor/c99e4a6b-920b-401c-af99-ae200094de71", "name": "MUSA Lago di Como",        "paymentReached": true },
+    "elmhirst": { "url": "https://app.mews.com/distributor/2498d048-7b66-4e46-a563-b26700598ec2", "name": "Elmhirst's Resort",        "paymentReached": true },
+    "sunski":   { "url": "https://app.mews.com/distributor/a18e5b73-4fe4-468f-8cd7-b17e008232ec", "name": "Sun & Ski Inn and Suites", "paymentReached": true }
+  },
+
+  "deepLinkPattern": null,
+  "deepLinkNote": "NO date-prefilled deep link exists. Tested all common param formats against a live load + body-text check — NONE prefill the calendar: ?start=, ?startDate=, ?arrival=, ?from=, ?checkin=, ?cin= (plus matching end/to/checkout/cout/endDate/departure). The calendar MUST be driven manually.",
+
+  "iframe": {
+    "present": true,
+    "selector": "iframe[name^=\"mews-distributor\"]",
+    "note": "Same-origin (app.mews.com -> app.mews.com). Reach elements via Playwright frameLocator('iframe[name^=\"mews-distributor\"]') or page.frames().find(f => f.name().startsWith('mews-distributor')). The cookie banner is the only thing that lives in the TOP page, not the iframe. There are additional NESTED iframes on the payment page for card fields (see paymentIndicator)."
+  },
+
+  "cookieDismiss": {
+    "selector": "[data-testid=\"actionButton-accept\"]",
+    "text": "Accept all",
+    "frame": "top page (NOT inside the distributor iframe)",
+    "alternateText": "No, adjust (data-testid=actionButton-adjust) — do NOT click"
+  },
+
+  "steps": [
+    {
+      "action": "goto",
+      "selector": "page",
+      "desc": "Navigate to https://app.mews.com/distributor/{uuid} with waitUntil=domcontentloaded (NOT networkidle — Mews keeps a websocket open and networkidle never resolves). Then wait for iframe[name^=\"mews-distributor\"] and a visible button inside it."
+    },
+    {
+      "action": "click",
+      "selector": "[data-testid=\"actionButton-accept\"]  (TOP page)",
+      "desc": "Dismiss the 'We use cookies / Accept all' banner. Lives in the top page, not the iframe."
+    },
+    {
+      "action": "click",
+      "selector": "iframe[name^=\"mews-distributor\"] >> button:has-text('Select dates')  (first match)",
+      "desc": "Open the date picker. Equivalent frameLocator: fl().locator('button').filter({ hasText: 'Select dates' }).first()."
+    },
+    {
+      "action": "navigateMonth",
+      "selector": "iframe >> button[aria-label*=\"next month\" i]",
+      "desc": "Calendar opens showing current + next month side-by-side. For T+45 dates you must advance. DETECT month visibility by sampling day-button aria-labels (NOT h2/h3 — those pick up the stepper text 'Dates/Categories'). Click the 'Next month' button until the target month appears in the first/last day-button aria-label. Up to ~10 clicks."
+    },
+    {
+      "action": "clickDate",
+      "selector": "iframe >> button[aria-label^=\"{D} {Month} {YYYY}\"]",
+      "desc": "Pick check-in day. Day cells are <button aria-label=\"16 August 2026, Sunday\">16</button>. Use PREFIX match on aria-label (startsWith '{day} {month} {year}'). Skip cells where aria-disabled=\"true\" OR data-test-date starts with 'disabled-'. After selection the label gains ', SelectedAsStartDate'."
+    },
+    {
+      "action": "clickDate",
+      "selector": "iframe >> button[aria-label^=\"{D} {Month} {YYYY}\"]",
+      "desc": "Pick check-out day (T+2 after the actual selected start). May need another navigateMonth if start/end differ. After selection the label gains ', SelectedAsEndDate'."
+    },
+    {
+      "action": "setOccupancy",
+      "selector": "iframe >> button[aria-label=\"Increment\"] (adults) / button[aria-label=\"Decrement\"]",
+      "desc": "Set adults = 2. The adults counter is the FIRST Increment/Decrement pair on the dates page. Read the current count from the 'Adults' label's row (regex /Adults?\\D+(\\d+)/ after climbing up to 5 parent levels), then Increment if <2 or Decrement if >2. The default is sometimes 1, sometimes 2 depending on property."
+    },
+    {
+      "action": "click",
+      "selector": "iframe >> button[data-test-id=\"dates-next-button\"]  (or button[aria-label=\"Next\"])  — click via element.click() in frame.evaluate, NOT Playwright click",
+      "desc": "Advance Dates -> Categories. The calendar portal overlay (div[data-mds-element] MonthElement inside #portal-container) intercepts Playwright pointer clicks; press Escape first OR use frame.evaluate(() => button.click()) to bypass. Has data-test-id=\"dates-next-button\"."
+    },
+    {
+      "action": "click",
+      "selector": "iframe >> button:has-text('Show rates')  (first match)",
+      "desc": "Categories page: each room card has a 'Show rates' button. Click the first one to expand available rate plans for that room."
+    },
+    {
+      "action": "click",
+      "selector": "iframe >> button:has-text('Book now')  (first match, EXACT text /^Book now$/i)",
+      "desc": "Rates expand inline. Each rate plan has a 'Book now' button. Click the first enabled one. Adds the room to cart and lands on the Summary step."
+    },
+    {
+      "action": "click",
+      "selector": "iframe >> button:has-text('Continue')  (EXACT text /^Continue$/i)",
+      "desc": "Summary step -> Continue. Lands on the 'Details' step (the PAYMENT page — see paymentIndicator)."
+    },
+    {
+      "action": "waitForPayment",
+      "selector": "iframe >> iframe[name^=\"securefields-\"][name$=\"--cardNumber\"]",
+      "desc": "STOP here. The Details step is the payment page. Do NOT click 'Confirm' — that attempts the charge."
+    }
+  ],
+
+  "paymentReached": true,
+  "paymentIndicator": {
+    "primary": "Datatrans Secure-Fields nested iframes inside the distributor iframe: iframe[name^=\"securefields-\"][name$=\"--cardNumber\"] (card number) and iframe[name^=\"securefields-\"][name$=\"--cvv\"] (CVV). These only render on the Details/payment page.",
+    "secondary": "input#expiration (autocomplete=cc-exp) and input#holderName (cardholder name) — NOT inside an iframe, directly in the distributor iframe document.",
+    "heading": "An <h2/h3/h4> containing 'Payment' (e.g. 'Contact & payment details', 'Payment').",
+    "ctaButton": "button with EXACT text 'Confirm' — this is the CHARGE button; on some properties it is disabled until required contact fields are filled. Never click in a friction test.",
+    "urlChange": "NONE — the URL stays https://app.mews.com/distributor/{uuid} for every step (SPA). URL cannot be used as a payment indicator.",
+    "stepper": "The step indicator at the top shows '5 Details' as the active/highlighted step on the payment page (steps: 1 Dates, 2 Categories, 3 Rates, 4 Summary, 5 Details)."
+  },
+
+  "paymentProvider": "Datatrans (Swiss acquirer) Secure Fields — branded to the user as 'Secured with Mews Payments'. reCAPTCHA Enterprise (invisible) loads on the Details page and would fire on Confirm.",
+
+  "gotchas": [
+    "waitUntil=networkidle NEVER resolves (Mews holds a websocket open). Use domcontentloaded + explicit waits.",
+    "The cookie banner is in the TOP page; the booking flow is in the iframe. Two different frames for two different tasks.",
+    "NO deep link. Six common param-format families were tested; none prefill dates. Calendar must be driven.",
+    "Month detection: do NOT use h2/h3 innerText — the stepper headings ('Dates','Categories',...) live in h2/h3 and give false matches. Sample day-button aria-labels instead.",
+    "Playwright's CSS selector engine did not reliably match [aria-label^=\"16 August 2026\"] on the day cells (returned count 0 even when frame.evaluate found the node). Use frame.evaluate(() => querySelectorAll + click) to pick days.",
+    "Calendar portal overlay (MonthElement in #portal-container) intercepts Playwright pointer-clicks on the dates 'Next' button. Press Escape first, or use frame.evaluate(() => btn.click()) to bypass.",
+    "Disabled/booked days carry BOTH aria-disabled=\"true\" AND data-test-date=\"disabled-M/D/YYYY\" — check both before clicking. Availability differs per property and per date (e.g. Elmhirst's had Aug 16 disabled).",
+    "The adults default varies by property (1 or 2). Always read the current count and adjust rather than blindly clicking Increment.",
+    "After picking the start date the calendar sometimes jumps to a different month view — re-run navigateMonth before picking the end date.",
+    "Use EXACT-text match for the forward CTAs. 'Next' substring-matches the carousel 'Next image' buttons (room photo carousel) and misfires. Use innerText.trim().toLowerCase() === 'continue' / 'book now' / 'show rates'.",
+    "The 'Details' step is the PAYMENT page — it combines the guest form AND payment fields on one page. There is no separate '/pay' or '/checkout' URL step.",
+    "Confirm (the charge button) may be disabled until required contact fields are filled — its presence (even disabled) plus the cardNumber securefield iframe is the reliable payment-page signal.",
+    "Card number + CVV inputs are inside NESTED iframes (Datatrans Secure Fields) — to actually type a card number you'd need page.frameLocator('iframe[name^=\"mews-distributor\"]').frameLocator('iframe[name^=\"securefields-\"][name$=\"--cardNumber\"]').locator('input'). For a friction test, STOP before this.",
+    "Stealth plugin (puppeteer-extra-plugin-stealth via playwright-extra) was used; without it Mews/Datatrans may flag the session. reCAPTCHA Enterprise is invisible and only executes on Confirm."
+  ],
+
+  "referenceScript": "tmp/mews-flow-spec.mjs  (run: TARGET=musa|elmhirst|sunski node tmp/mews-flow-spec.mjs)",
+  "proofScreenshots": [
+    "tmp/mews-musa-FINAL-payment.png",
+    "tmp/mews-elmhirst-FINAL-payment.png",
+    "tmp/mews-sunski-FINAL-payment.png"
+  ]
+}

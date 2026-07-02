@@ -1,0 +1,33 @@
+{
+  "system": "siteminder",
+  "property": "Nantucket Whale Inn",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 1,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "redirected-off-domain",
+  "reason": "payment-on-third-party-domain",
+  "clicks": 5,
+  "handoffs": 1,
+  "fields": 0,
+  "latencySec": 2.94,
+  "interruptions": 1,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 3,
+  "measuredLfi": 24.4,
+  "scoredLfi": 24.4,
+  "completionPct": 6.7,
+  "durationSec": 39.3,
+  "commit": "ea615ec",
+  "ts": "2026-07-02T12:28:12.446Z",
+  "origins": [
+    "https://www.nantucketwhaleinn.com",
+    "https://direct-book.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

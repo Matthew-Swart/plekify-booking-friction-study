@@ -175,16 +175,17 @@ async function runProp(browser, prop, dates) {
       const kind = document.querySelector('[data-sitekey]') ? (document.querySelector('iframe[src*="recaptcha"]') ? 'recaptcha' : (document.querySelector('iframe[src*="hcaptcha"]') ? 'hcaptcha' : 'turnstile')) : null;
       return { vis, widget, text, kind };
     }).catch(() => ({ vis: false, widget: false, text: false, kind: null }));
-    out.captcha = { visible: !!(cap.vis || cap.widget || cap.text), kind: cap.kind };
+    const capSafe = cap || { vis: false, widget: false, text: false, kind: null };
+    out.captcha = { visible: !!(capSafe.vis || capSafe.widget || capSafe.text), kind: capSafe.kind };
 
     // ---- 4. Test date-prefilled URL params ----
+    // VERIFIED (2026-07-02): the working deep-link format is checkin + checkout
+    // (ISO YYYY-MM-DD). The older ?date=&nights= format does NOT hydrate the
+    // Chakra engine UI. See data/cloudbeds-flow-spec.json.
     if (engineUrl) {
-      // Cloudbeds canonical format observed: hotels.cloudbeds.com/reservation/<ID>
-      // Documented query keys include: ?date=<checkin>&nights=N | ?checkin=..&checkout=.. | ?adults=..
-      // Try several in a fresh context so we don't disturb the main flow.
       const trials = [
-        { format: 'date+nights', q: `?date=${dates.checkin}&nights=2&adults=2` },
         { format: 'checkin+checkout', q: `?checkin=${dates.checkin}&checkout=${dates.checkout}&adults=2` },
+        { format: 'date+nights', q: `?date=${dates.checkin}&nights=2&adults=2` },
       ];
       for (const tr of trials) {
         const testUrl = engineUrl.split('?')[0] + tr.q;

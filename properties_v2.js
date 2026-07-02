@@ -13,16 +13,15 @@ export const PROPERTIES = [
   { system: 'plekify', name: 'Plekify · Hemingways Watamu', homepageUrl: 'https://plekify.com/products/hemingways-watamu-1-bedroom-ocean-view-suite', bookingUrl: 'https://plekify.com/products/hemingways-watamu-1-bedroom-ocean-view-suite', tier: 'upscale', volumeClass: 'medium', region: 'Africa', distribution: 'direct+ota' },
   { system: 'plekify', name: 'Plekify · Zannier Omaanda', homepageUrl: 'https://plekify.com/products/zannier-omaanda-1-bedroom-hut', bookingUrl: 'https://plekify.com/products/zannier-omaanda-1-bedroom-hut', tier: 'luxury', volumeClass: 'medium', region: 'Africa', distribution: 'direct+ota' },
 
-  // ---------------- SITEMINDER (v1-verified working) ----------------
-  { system: 'siteminder', name: 'Ivy City Hotel', homepageUrl: 'https://www.ivycityhotel.com/', tier: 'upscale', volumeClass: 'medium', region: 'North America', distribution: 'direct+ota' },
-  { system: 'siteminder', name: 'Nantucket Whale Inn', homepageUrl: 'https://www.nantucketwhaleinn.com/', tier: 'midscale', volumeClass: 'low', region: 'North America', distribution: 'direct+ota' },
-  { system: 'siteminder', name: 'Tremola-San Gottardo', homepageUrl: 'https://www.tremola-sangottardo.ch/english', tier: 'midscale', volumeClass: 'low', region: 'Europe', distribution: 'direct+ota' },
-  { system: 'siteminder', name: 'Beach Waikiki Hostel', homepageUrl: 'https://www.thebeachwaikikihostel.com/', tier: 'budget', volumeClass: 'medium', region: 'North America', distribution: 'direct+ota' },
+  // ---------------- SITEMINDER (direct-book.com SPA; date-prefilled deep-link bypasses calendar) ----------------
+  { system: 'siteminder', name: 'Ivy City Hotel', homepageUrl: 'https://www.ivycityhotel.com/', smSlug: 'ivycityhoteldirect', tier: 'upscale', volumeClass: 'medium', region: 'North America', distribution: 'direct+ota' },
+  { system: 'siteminder', name: 'Nantucket Whale Inn', homepageUrl: 'https://www.nantucketwhaleinn.com/', smSlug: 'nantucketdirect', tier: 'midscale', volumeClass: 'low', region: 'North America', distribution: 'direct+ota' },
+  { system: 'siteminder', name: 'Tremola-San Gottardo', homepageUrl: 'https://www.tremola-sangottardo.ch/english', smSlug: 'BedNBikeTremolaSanGottardoDIRECT', tier: 'midscale', volumeClass: 'low', region: 'Europe', distribution: 'direct+ota' },
 
-  // ---------------- CLOUDBEDS (v1) ----------------
-  { system: 'cloudbeds', name: 'Saltline Hotel', homepageUrl: 'https://www.saltlinehotel.com/', tier: 'midscale', volumeClass: 'low', region: 'North America', distribution: 'direct+ota' },
-  { system: 'cloudbeds', name: 'Sea Esta Komodo', homepageUrl: 'https://seaestakomodo.com/', tier: 'midscale', volumeClass: 'low', region: 'Asia', distribution: 'direct+ota' },
-  { system: 'cloudbeds', name: 'Fatwave Surf Resort', homepageUrl: 'https://www.fatwavesurfresort.com/', tier: 'midscale', volumeClass: 'low', region: 'Asia', distribution: 'direct+ota' },
+  // ---------------- CLOUDBEDS (hotels.cloudbeds.com Chakra; deep-link; add-to-cart agent-block) ----------------
+  { system: 'cloudbeds', name: 'Saltline Hotel', homepageUrl: 'https://www.saltlinehotel.com/', cbId: 'Cy0z7M', tier: 'midscale', volumeClass: 'low', region: 'North America', distribution: 'direct+ota' },
+  { system: 'cloudbeds', name: 'Fatwave Surf Resort', homepageUrl: 'https://www.fatwavesurfresort.com/', cbId: 'SoRbvN', tier: 'midscale', volumeClass: 'low', region: 'Asia', distribution: 'direct+ota' },
+  { system: 'cloudbeds', name: 'Sea Esta Komodo', homepageUrl: 'https://seaestakomodo.com/', cbId: null, tier: 'midscale', volumeClass: 'low', region: 'Asia', distribution: 'direct+ota', note: 'reservation id behind SiteGround sgcaptcha — pending' },
 
   // ---------------- NIGHTSBRIDGE (v1-verified working) ----------------
   { system: 'nightsbridge', name: 'Atlantic View', homepageUrl: 'https://atlanticviewcapetown.com/', bookingUrl: 'https://book.nightsbridge.com/30738', tier: 'upscale', volumeClass: 'low', region: 'Africa', distribution: 'direct+ota' },
