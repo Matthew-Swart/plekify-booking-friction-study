@@ -1,0 +1,186 @@
+{% comment %}
+  ═══════════════════════════════════════════════════════════════
+  PLEKIFY V10 — Agent-Readiness Chart (Friction Study v2, §8.3)
+  ═══════════════════════════════════════════════════════════════
+  The second axis of the v2 study: can an autonomous booking agent
+  discover and complete a booking on the OPEN WEB (no private B2B deal)?
+  Scored 0–3 across six machine-collected signals. Higher = better.
+
+  Data is the v2 ARS residential result (PROTOCOL-v2.md / results_v2).
+  Bars: Plekify = --plk-ink; competitors = muted gray.
+  Grayscale only · Geist Sans/Mono · tokens from plekify-v10.css.
+  ═══════════════════════════════════════════════════════════════
+{% endcomment %}
+{% render 'plekify-citation-registry' %}
+
+<div class="plekify-v10 plekify-v10-ars" id="ars-{{ section.id }}">
+  <div class="plk-container plk-section">
+
+    <header class="plk-ars__header plk-reveal">
+      <span class="plk-eyebrow">{{ section.settings.eyebrow | default: 'Agent-Readiness (v2)' }}</span>
+      <h2 class="plk-ars__heading">{{ section.settings.heading }}</h2>
+      <p class="plk-ars__intro">{{ section.settings.intro }}</p>
+    </header>
+
+    <div class="plk-ars__chart" role="img"
+      aria-label="Agent-Readiness Score by system, 0 to 3, higher is better. Plekify 3.0 leads; the field ranges 0.6 to 2.0.">
+      <div class="plk-ars__scale" aria-hidden="true">
+        <span class="plk-ars__scale-tick" style="--h: 0%">0</span>
+        <span class="plk-ars__scale-tick" style="--h: 33%">1</span>
+        <span class="plk-ars__scale-tick" style="--h: 67%">2</span>
+        <span class="plk-ars__scale-tick" style="--h: 100%">3</span>
+      </div>
+      <ul class="plk-ars__bars">
+        {% for block in section.blocks %}
+          {%- liquid
+            assign ars = block.settings.ars | plus: 0.0
+            assign h = ars | divided_by: 3.0 | times: 100 | round: 1
+            assign is_plekify = false
+            if block.settings.highlighted
+              assign is_plekify = true
+            endif
+          -%}
+          <li class="plk-ars__row{% if is_plekify %} plk-ars__row--winner{% endif %}" {{ block.shopify_attributes }}>
+            <span class="plk-ars__bar-wrap">
+              <span class="plk-ars__bar" style="--bar-h: {{ h }}%;" data-ars="{{ ars }}"></span>
+            </span>
+            <span class="plk-ars__val">{{ ars | round: 2 }}</span>
+            <span class="plk-ars__name">{{ block.settings.name }}</span>
+            <span class="plk-ars__note">{{ block.settings.note }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <p class="plk-ars__legend">
+      {{ section.settings.legend }}
+      {% assign ucp = 'Shopify-UCP' %}{% render 'plekify-cite', marker: ucp %}
+    </p>
+
+    {%- comment -%} Methodology + open repository {%- endcomment -%}
+    <details class="plk-ars__methodology plk-reveal">
+      <summary>{{ section.settings.methodology_cta | default: 'How Agent-Readiness is measured' }}</summary>
+      <div class="plk-ars__methodology-body">
+        {{ section.settings.methodology_text }}
+        {% if section.settings.github_url != blank %}
+          <p class="plk-ars__repo">
+            <a class="plk-link" href="{{ section.settings.github_url }}" target="_blank" rel="noopener noreferrer">
+              Open repository — {{ section.settings.github_url | remove_first: 'https://' }} ↗
+            </a>
+          </p>
+        {% endif %}
+      </div>
+    </details>
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .plekify-v10-ars { background: var(--plk-surface, #FFFFFF); color: var(--plk-ink, #171717); font-family: var(--font-body), 'Geist', system-ui, sans-serif; }
+  .plekify-v10-ars .plk-container { max-width: 1080px; margin: 0 auto; padding: clamp(48px, 8vw, 110px) clamp(20px, 4vw, 40px); }
+  .plekify-v10-ars .plk-eyebrow { display: block; font-family: var(--font-mono), 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--plk-text-faint, #6B6B6B); margin-bottom: 16px; }
+  .plekify-v10-ars .plk-ars__heading { font-family: var(--font-display), var(--font-body), sans-serif; font-weight: 300; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; letter-spacing: -0.015em; margin: 0 0 18px; }
+  .plekify-v10-ars .plk-ars__intro { font-size: clamp(17px, 1.5vw, 19px); line-height: 1.6; color: var(--plk-text-secondary, #333); max-width: 760px; margin: 0; }
+
+  .plekify-v10-ars .plk-ars__chart { position: relative; margin: clamp(32px, 5vw, 52px) 0 0; padding-left: 34px; }
+  .plekify-v10-ars .plk-ars__scale { position: absolute; left: 0; top: 0; bottom: 56px; width: 26px; border-right: 1px solid var(--plk-border, rgba(0,0,0,0.10)); }
+  .plekify-v10-ars .plk-ars__scale-tick { position: absolute; right: 0; bottom: calc(var(--h) - 7px); font-family: var(--font-mono), 'Geist Mono', monospace; font-size: 10px; color: var(--plk-text-faint, #6B6B6B); }
+
+  .plekify-v10-ars .plk-ars__bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+  .plekify-v10-ars .plk-ars__row { position: relative; display: grid; grid-template-columns: 1fr 46px 150px; align-items: center; gap: 12px; height: 30px; }
+  .plekify-v10-ars .plk-ars__bar-wrap { position: relative; height: 22px; background: var(--plk-surface-2, #F0F0F0); border-radius: 4px; overflow: hidden; }
+  .plekify-v10-ars .plk-ars__bar { position: absolute; left: 0; top: 0; bottom: 0; width: var(--bar-h, 0%); background: #BBB; border-radius: 4px; transition: width .9s cubic-bezier(.2,.7,.2,1); }
+  .plekify-v10-ars .plk-ars__row--winner .plk-ars__bar { background: var(--plk-ink, #171717); }
+  .plekify-v10-ars .plk-ars__val { font-family: var(--font-mono), 'Geist Mono', monospace; font-size: 13px; font-weight: 500; color: var(--plk-ink, #171717); text-align: right; }
+  .plekify-v10-ars .plk-ars__name { font-size: 13px; color: var(--plk-text-secondary, #333); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .plekify-v10-ars .plk-ars__note { display: none; }
+  .plekify-v10-ars .plk-ars__row--winner .plk-ars__name { font-weight: 600; color: var(--plk-ink, #171717); }
+
+  .plekify-v10-ars .plk-ars__legend { margin: 26px 0 0; font-size: 14px; line-height: 1.6; color: var(--plk-text-muted, #555); max-width: 820px; }
+
+  .plekify-v10-ars .plk-ars__methodology { margin: 30px 0 0; border: 1px solid var(--plk-border, rgba(0,0,0,0.08)); border-radius: 8px; background: var(--plk-surface-alt, #FAFAFA); }
+  .plekify-v10-ars .plk-ars__methodology > summary { padding: 14px 18px; cursor: pointer; list-style: none; font-family: var(--font-mono), 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--plk-text-secondary, #333); }
+  .plekify-v10-ars .plk-ars__methodology > summary::-webkit-details-marker { display: none; }
+  .plekify-v10-ars .plk-ars__methodology > summary::after { content: ' +'; color: var(--plk-text-faint, #6B6B6B); }
+  .plekify-v10-ars .plk-ars__methodology[open] > summary::after { content: ' −'; }
+  .plekify-v10-ars .plk-ars__methodology-body { padding: 0 18px 18px; border-top: 1px solid var(--plk-border, rgba(0,0,0,0.08)); }
+  .plekify-v10-ars .plk-ars__methodology-body p { font-size: 15px; line-height: 1.7; color: var(--plk-text-secondary, #333); margin: 14px 0 0; }
+
+  @media (max-width: 640px) {
+    .plekify-v10-ars .plk-ars__row { grid-template-columns: 1fr 40px 108px; gap: 9px; }
+    .plekify-v10-ars .plk-ars__name { font-size: 12px; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+(function () {
+  'use strict';
+  // Animate bars on scroll into view; render final state under reduced-motion.
+  function init(root) {
+    var bars = root.querySelectorAll('.plk-ars__bar');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function setFinal() { bars.forEach(function (b) { b.style.width = b.style.getPropertyValue('--bar-h'); }); }
+    function reset() { bars.forEach(function (b) { b.style.width = '0%'; }); }
+    if (reduce) { setFinal(); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { reset(); requestAnimationFrame(function () { requestAnimationFrame(setFinal); }); }
+      });
+    }, { threshold: 0.2 });
+    io.observe(root.querySelector('.plk-ars__chart'));
+  }
+  document.querySelectorAll('.plekify-v10-ars').forEach(init);
+})();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "V10 Agent-Readiness Chart",
+  "tag": "section",
+  "class": "plekify-v10-ars-section",
+  "limit": 1,
+  "settings": [
+    { "type": "header", "content": "Header" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Agent-Readiness (v2)" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The only booking engine an AI agent can actually use." },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Agent-Readiness (0–3, higher is better): can an autonomous booking agent discover and complete a booking on the open web — without a private B2B deal? Plekify is the only system with a live Universal Commerce Protocol manifest (catalog + Shop Pay handlers + an MCP endpoint). Everyone else is gated by closed APIs, missing structured data, and bot-walls." },
+    { "type": "header", "content": "Legend + methodology" },
+    { "type": "textarea", "id": "legend", "label": "Legend", "default": "Six machine-collected signals: structured data, robots/bot posture, CAPTCHA/WAF friction, express payments, public API, and protocol adherence. Measured from both a residential and a datacenter egress (where cloud AI agents run); Plekify scores 3.0 from either. Open-web definition per the Shopify Universal Commerce Protocol." },
+    { "type": "text", "id": "methodology_cta", "label": "Methodology toggle", "default": "How Agent-Readiness is measured" },
+    { "type": "richtext", "id": "methodology_text", "label": "Methodology body", "default": "<p>Each system is scored 0–3 on six signals, each with a published detection method: structured data (JSON-LD LodgingBusiness/Offer or a live UCP catalog); robots/bot posture; CAPTCHA/WAF friction (visible challenge only); express payments (UCP/Shop Pay/Apple Pay/Google Pay); public API (self-serve vs gated); and protocol adherence (a real /.well-known/ucp manifest or A2A agent card). The composite is fully auditable — every raw signal is in the open repository.</p>" },
+    { "type": "url", "id": "github_url", "label": "Open repository URL" }
+  ],
+  "blocks": [
+    {
+      "type": "system",
+      "name": "System",
+      "limit": 12,
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Plekify" },
+        { "type": "text", "id": "ars", "label": "ARS (0–3)", "default": "3.0" },
+        { "type": "checkbox", "id": "highlighted", "label": "Highlight as Plekify", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "V10 Agent-Readiness Chart",
+      "category": "Plekify",
+      "blocks": [
+        { "type": "system", "settings": { "name": "Plekify", "ars": "3.0", "highlighted": true } },
+        { "type": "system", "settings": { "name": "Cloudbeds", "ars": "2.0" } },
+        { "type": "system", "settings": { "name": "Mews", "ars": "1.9" } },
+        { "type": "system", "settings": { "name": "Booking.com", "ars": "1.8" } },
+        { "type": "system", "settings": { "name": "Stayntouch", "ars": "1.6" } },
+        { "type": "system", "settings": { "name": "SiteMinder", "ars": "1.5" } },
+        { "type": "system", "settings": { "name": "RoomRaccoon", "ars": "1.4" } },
+        { "type": "system", "settings": { "name": "Travelstart", "ars": "1.4" } },
+        { "type": "system", "settings": { "name": "NightsBridge", "ars": "1.35" } },
+        { "type": "system", "settings": { "name": "Airbnb", "ars": "1.25" } },
+        { "type": "system", "settings": { "name": "OPERA-ecosystem", "ars": "1.2" } },
+        { "type": "system", "settings": { "name": "Expedia", "ars": "0.6" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
