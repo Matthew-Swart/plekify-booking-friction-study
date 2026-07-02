@@ -266,6 +266,225 @@ export class NightsBridgeHandler extends BaseHandler {
   }
 }
 
+/* ---------------- SiteMinder (direct-book.com SPA; date-prefilled deep-link) ----------------
+ * Flow proven by src/probes/siteminder-flow.js (reaches payment on all 3 properties):
+ *   deep-link -> dismiss cookie overlay (REAL playwright click, retry 3x, verify gone;
+ *                overlay can RE-MOUNT on /book route) -> wait for rate list -> Select first
+ *   rate -> wait summary Book ENABLED -> click -> /book step1 -> dismiss cookies again +
+ *   nuke overlay divs -> fill guest fields (force fill + Vue input event) -> country v-select
+ *   (+ extra required v-selects: Nantucket) -> Continue -> [Extras skip] -> proceed-to-payment.
+ * Critical gotchas: .cookie-overlay intercepts ALL clicks until a REAL Playwright click on
+ * cookies-accept-all (JS click is a no-op); use domcontentloaded NOT networkidle (long-lived
+ * SPA connection); fill fields with force + dispatch 'input' for Vue reactivity. */
+const SYNTH = { firstName: 'Test', lastName: 'Booker', email: 'frictionstudy.test@example.com', confirmEmail: 'frictionstudy.test@example.com', phone: '5551234567', address1: '1 Test St', city: 'Testville', state: 'NY', postCode: '20002' };
+
+export class SiteMinderHandler extends BaseHandler {
+  smDeepLink(slug, checkin, checkout) {
+    // Raw brackets (NOT percent-encoded) — direct-book.com canonical form. The SPA
+    // itself emits raw [] in its redirect; URLSearchParams percent-encodes them which
+    // the SPA also accepts, but raw matches the canonical network-log form.
+    return `https://direct-book.com/properties/${slug}?locale=en&items[0][adults]=2&items[0][children]=0&items[0][infants]=0&currency=USD&checkInDate=${checkin}&checkOutDate=${checkout}`;
+  }
+
+  /** Dismiss the cookie overlay. CRITICAL: a full-viewport .cookie-overlay div intercepts
+   * ALL pointer events until the Accept button is PLAYWRIGHT-clicked (a raw JS el.click()
+   * is a no-op — verified). The banner mounts slightly after domcontentloaded, so wait for
+   * the button to be visible; retry up to 3x; confirm the overlay is actually gone. */
+  async _smDismissCookies() {
+    for (let i = 0; i < 3; i++) {
+      const btn = this.page.locator('button[data-sm-test="cookies-accept-all"]').first();
+      try {
+        await btn.waitFor({ state: 'visible', timeout: 8000 });
+        await btn.click({ timeout: 8000 });
+      } catch { continue; }
+      const gone = await this.page.evaluate(() => {
+        const o = document.querySelector('.cookie-overlay');
+        if (!o) return true;
+        const cs = getComputedStyle(o);
+        return cs.display === 'none' || cs.visibility === 'hidden' || cs.opacity === '0';
+      }).catch(() => true);
+      if (gone) return true;
+    }
+    return false;
+  }
+
+  /** Hard-remove any lingering cookie overlay/banner divs (the consent cookie is already
+   * set after _smDismissCookies, so removing the div does not change consent state). */
+  async _smNukeOverlays() {
+    await this.page.evaluate(() => {
+      document.querySelectorAll('.cookie-overlay, .cookie-banner, [role="dialog"][aria-label="Cookie policy"]')
+        .forEach((e) => e.remove());
+    }).catch(() => {});
+  }
+
+  /** Force-fill a field, falling back to a native setter + 'input'/'change' events so the
+   * Vue SPA's reactivity picks the value up. */
+  async _smFillField(sel, val) {
+    const f = this.page.locator(sel).first();
+    await f.waitFor({ state: 'visible', timeout: 15000 }).catch(() => {});
+    await f.fill(val, { force: true }).catch(async () => {
+      await this.page.evaluate(({ sel, val }) => {
+        const el = document.querySelector(sel);
+        if (!el) return;
+        const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+        setter ? setter.call(el, val) : (el.value = val);
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+      }, { sel, val });
+    });
+  }
+
+  /** Open a vue-select combobox (by its input selector) and click an option. If `text` is
+   * provided, click the option whose text matches; else click the first option. */
+  async _smPickVSelect(inputSel, text = null) {
+    const inp = this.page.locator(inputSel).first();
+    if ((await inp.count()) === 0) return false;
+    await inp.click({ force: true }).catch(() => {});
+    const menu = this.page.locator('.vs__dropdown-menu .vs__dropdown-option');
+    const target = text
+      ? this.page.locator('.vs__dropdown-menu .vs__dropdown-option', { hasText: text }).first()
+      : menu.first();
+    try { await target.click({ timeout: 5000 }); }
+    catch { await target.click({ force: true }).catch(() => {}); }
+    return true;
+  }
+
+  async studyB(prop) {
+    const ctx = { paymentReached: false, redirected: false, captcha: false, botWall: false, mandatoryAccountWall: false, error: null };
+    const dates = rollingStudyBDates();
+    if (!prop.smSlug) { ctx.error = 'no smSlug'; return ctx; }
+    try {
+      // 1. Start on the property domain so the redirect to direct-book.com is counted as
+      //    a domain handoff (the key trust-friction signal, ×6.6). The guest's "Book" click
+      //    sends them off-domain.
+      await this.timedGoto(prop.homepageUrl);
+      await sleep(1200);
+      this.m.recordClick(); // the guest's Book click -> off-domain booking engine
+
+      // 2. Deep-link to the date-prefilled results (bypasses the calendar). Use
+      //    domcontentloaded — NOT networkidle (the Vue SPA keeps a long-lived connection).
+      await this.timedGoto(this.smDeepLink(prop.smSlug, dates.checkin, dates.checkout), 'domcontentloaded');
+      await sleep(2500);
+      await this._smDismissCookies();
+
+      // 3. Wait for the rate list to render, then Select the first rate.
+      const rateBtn = this.page.locator('button[data-sm-test^="rate-select-"]').first();
+      await rateBtn.waitFor({ state: 'visible', timeout: 30000 });
+      await rateBtn.click().catch(async () => { await rateBtn.click({ force: true }); });
+      this.m.recordClick();
+      await sleep(900);
+
+      // 4. Summary "Book" — wait for it to be visible AND enabled, then click -> /book step1.
+      const bookBtn = this.page.locator('button[data-sm-test="summary-cart-book"]');
+      await bookBtn.waitFor({ state: 'visible' });
+      await this.page.waitForFunction(
+        () => { const b = document.querySelector('button[data-sm-test="summary-cart-book"]'); return b && !b.disabled; },
+        { timeout: 15000 }
+      );
+      await bookBtn.click().catch(async () => { await bookBtn.click({ force: true }); });
+      this.m.recordClick();
+      await this.page.waitForURL(/\/book\?.*step=/, { timeout: 30000 });
+
+      // The cookie banner can RE-MOUNT on the /book route — dismiss again, and hard-remove
+      // any lingering overlay div so it can't block the guest-details form clicks/fills.
+      await this._smDismissCookies();
+      await this._smNukeOverlays();
+
+      // 5. Wait for the guest-details form, then fill every required field. The cookie
+      //    overlay can re-appear flakily; nuke it once more before filling.
+      await this.page.locator('#firstName').waitFor({ state: 'attached', timeout: 30000 });
+      await this._smNukeOverlays();
+      const fills = [
+        ['#firstName', SYNTH.firstName],
+        ['#lastName', SYNTH.lastName],
+        ['#email', SYNTH.email],
+        ['#confirmEmail', SYNTH.confirmEmail],
+        ['#phone', SYNTH.phone],
+        ['#address1', SYNTH.address1],
+        ['#city', SYNTH.city],
+        ['#state', SYNTH.state],
+        ['#postCode', SYNTH.postCode],
+      ];
+      for (const [sel, val] of fills) await this._smFillField(sel, val);
+
+      // Country is a vue-select; the autocomplete="country-name" attr is the stable hook.
+      await this._smPickVSelect('input[autocomplete="country-name"]', 'United States');
+      // Some properties add EXTRA required v-selects (Nantucket: "How did you hear about
+      // us?" / "Planned arrival time?"). Pick the first option of each to satisfy validation.
+      for (const placeholder of ['Please select...', 'Select time']) {
+        await this._smPickVSelect(`input[placeholder="${placeholder}"]`);
+      }
+      await sleep(500);
+
+      // 6. Continue -> step3 (T&Cs + final proceed-to-payment).
+      const continueBtn = this.page.locator('button[data-sm-test="guest-details-continue"]');
+      await continueBtn.click({ timeout: 15000 }).catch(async () => { await continueBtn.click({ force: true }); });
+      this.m.recordClick();
+      await sleep(2000);
+
+      // 7. OPTIONAL Extras upsell step (some properties insert it between guest-details
+      //    and payment). If present, skip/continue past it.
+      const extrasSkip = this.page.locator('button[data-sm-test="extras-skip-button-top"]');
+      const extrasContinue = this.page.locator('button[data-sm-test="extras-continue"]');
+      if ((await extrasSkip.count()) > 0) { await extrasSkip.first().click(); this.m.recordClick(); await sleep(1500); }
+      else if ((await extrasContinue.count()) > 0) { await extrasContinue.first().click(); this.m.recordClick(); await sleep(1500); }
+
+      // 8. Payment indicator: proceed-to-payment button present in the DOM on the /book route.
+      await this.page.waitForFunction(
+        () => !!document.querySelector('button[data-sm-test="proceed-to-payment"]'),
+        { timeout: 30000 }
+      );
+      const onBookRoute = /\/book\?/.test(this.page.url());
+      ctx.paymentReached = onBookRoute;
+      ctx.redirected = this.m.handoffs > 0;
+    } catch (e) { ctx.error = String(e).slice(0, 160); }
+    return ctx;
+  }
+  async studyA(prop) { return GenericHandler.prototype.studyA.call(this, prop); }
+}
+
+/* ---------------- Cloudbeds (hotels.cloudbeds.com Chakra; deep-link; add-to-cart agent-block) ----------------
+ * Deep-link works (dates -> room results). Add-to-cart ("Add" button) is agent-blocked
+ * under headless (isTrusted guard); headed may differ. Classify the outcome honestly. */
+export class CloudbedsHandler extends BaseHandler {
+  async studyB(prop) {
+    const ctx = { paymentReached: false, redirected: false, captcha: false, botWall: false, mandatoryAccountWall: false, error: null };
+    const dates = rollingStudyBDates();
+    const id = prop.cbId;
+    if (!id) { ctx.error = 'no cbId'; return ctx; }
+    const deep = `https://hotels.cloudbeds.com/reservation/${id}?checkin=${dates.checkin}&checkout=${dates.checkout}&adults=2`;
+    try {
+      await this.timedGoto(prop.homepageUrl);
+      await sleep(1000);
+      this.m.recordClick();
+      await this.timedGoto(deep, 'domcontentloaded'); // off-domain handoff counted
+      await sleep(3000);
+      if (await this.detectCaptcha()) { ctx.captcha = true; return ctx; }
+      // wait for room results / Add buttons
+      await this.page.locator('button.cb-select-button, .cb-accommodation-card').first().waitFor({ state: 'visible', timeout: 15000 }).catch(() => {});
+      // attempt Add (agent may be blocked)
+      const add = this.page.locator('button.cb-select-button').first();
+      if (await add.isVisible({ timeout: 3000 }).catch(() => false)) {
+        await add.click({ timeout: 5000 }).catch(() => {});
+        this.m.recordClick();
+        await sleep(2500);
+      }
+      // payment indicators (URL /payment or /confirm, stripe iframe, card field) OR still on results = blocked
+      const det = await this.page.evaluate(() => ({
+        payUrl: /\/payment|\/confirm/i.test(location.href),
+        card: !!document.querySelector('input[autocomplete="cc-number"]'),
+        iframe: !!document.querySelector('iframe[src*="stripe.com"], iframe[src*="cloudbeds"]'),
+        cartEmpty: /No Accommodations Added|no accommodations/i.test(document.body.innerText || ''),
+      })).catch(() => ({}));
+      ctx.paymentReached = !!(det.payUrl || det.card || det.iframe);
+      ctx.redirected = this.m.handoffs > 0;
+      if (!ctx.paymentReached) ctx.botWall = true; // add-to-cart did not advance -> agent-block
+    } catch (e) { ctx.error = String(e).slice(0, 160); }
+    return ctx;
+  }
+  async studyA(prop) { return GenericHandler.prototype.studyA.call(this, prop); }
+}
+
 /* ---------------- Generic competitor (best-effort) ---------------- */
 export class GenericHandler extends BaseHandler {
   async studyB(prop) {
@@ -311,8 +530,10 @@ export const REGISTRY = {
   plekify: PlekifyHandler,
   shopify: PlekifyHandler,
   nightsbridge: NightsBridgeHandler,
+  siteminder: SiteMinderHandler,
+  cloudbeds: CloudbedsHandler,
   generic: GenericHandler,
-  siteminder: GenericHandler, cloudbeds: GenericHandler, roomraccoon: GenericHandler,
+  roomraccoon: GenericHandler,
   mews: GenericHandler, stayntouch: GenericHandler, opera: GenericHandler,
   booking: GenericHandler, airbnb: GenericHandler, expedia: GenericHandler, travelstart: GenericHandler,
 };
