@@ -1,0 +1,27 @@
+{
+  "system": "nightsbridge",
+  "id": "19876",
+  "BASE": "https://book.nightsbridge.com/19876",
+  "ciISO": "2026-08-16",
+  "coISO": "2026-08-18",
+  "cookieBanner": false,
+  "ciDayClicked": true,
+  "coDayClicked": true,
+  "dateRangeVal": "08/16/2026 - 08/18/2026",
+  "bookSel": "button.btn-book-now, button:has-text(\"BOOK NOW\")",
+  "finalUrl": "https://book.nightsbridge.com/19876",
+  "paymentReached": true,
+  "paymentIndicator": "\"Payment Method\" + \"CONFIRM BOOKING\" controls visible (guest-details/payment panel within SPA)",
+  "detection": {
+    "paymentMethodCopy": true,
+    "confirmBookingBtn": true,
+    "personalInfoForm": true,
+    "depositCopy": true,
+    "termsCopy": true,
+    "cardNumInput": false,
+    "cvvInput": false,
+    "payIframe": false,
+    "captcha": false
+  },
+  "urlChanged": false
+}

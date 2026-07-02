@@ -1,0 +1,24 @@
+{
+  "system": "nightsbridge",
+  "id": "19876",
+  "BASE": "https://book.nightsbridge.com/19876",
+  "ciISO": "2026-08-16",
+  "coISO": "2026-08-18",
+  "ciMonthLabel": "August  2026",
+  "ciDayClicked": true,
+  "coDayClicked": true,
+  "dateRangeVal": "08/16/2026 - 08/18/2026",
+  "bookSel": "button:has-text(\"BOOK NOW\")",
+  "finalUrl": "https://book.nightsbridge.com/19876",
+  "paymentReached": false,
+  "paymentIndicator": "pay/confirm copy",
+  "navAfterBook": false,
+  "bodyHead": "JoThams B&B | Login | Check-in Check-out | SUN | 16 | AUG 2026 | – | TUE | 18 | AUG 2026 | 2NIGHTS | CHECK AVAILABILITY | HIDE CALENDAR | Available on these dates: | Move the mouse over the price for more info. | ❮ | DAY | ❮❮ WEEK❯❯ | ❯ | DAY | Room Type | SUN | 16 | AUG | MON | 17 | AUG | TUE | 18 | AUG | WED | 19 | AUG | THU | 20 | AUG | FRI | 21 | AUG | SAT | 22 | AUG | SUN | 23 | AUG | MON | 24 | AUG | TUE | 25 | AUG | Dolphin Private Unit | 1340 | 2400 | 1340 | 2400 | 1340 | 2400 | 1340 | 2400 | 1340 | 2400 | 1340 | 2400 | 1340 | 2400 | 1340 | 2400 | 1340 | 2400 | 1340 | 2400 | Parrot Private Unit | 1340 | 2100 | 1340 | 2100 | 1340 | 2100 | 1340 | 2100 | 1340 | 2100 | 1340 | 2100 | 1340 | 2100 | 1340 | 2100 | 1340 | 2100 | 1340 | 2100 | JPs Private Unit | 1200 | 1700 | 1200 | 1700 | 1200 | 1700 | 1200 | 1700 | 1200 | 1700 | 1200 | 1700 | 1200 | 1700 | 1200 | 1700 | 1200 | 1700 | 1200 | 1700 | Dolphin Private Unit | Open plan, spacious private unit, | 4 single bed, can be turned into two king size beds | dinning table and chairs. | airconditioned | fully fitted for self catering | courtyard , free parking behind remote gates | SHOW MORE | Max Guests: 3 (Max 3 adults) | Children: 0 - 3 years stay free, | 4 - 12 years pay 100% of the sharing rate | From R1,600.00 |  Per night for 2 adults | HIDE RATES | Available Rates | Bed & Breakfast | 1 Guest | 2 Guests | 3 Guests | Daily Rate | R1,340.00 | R2,400.00 | R3,390.00 | How many Rooms/Units do you need? | BOOK NOW | Self Catering | 1 Guest | 2 Guests | 3 Guests | Daily Rate | R1,000.00 | R1,600.00 | R2,300.00 | How many Rooms/Units do you need? | BOOK NOW | Dinner, Bed & Breakfast | 1 Guest | 2 Guests | 3 Guests | Daily Rate | R1,530.00 | R2,600.00 | R3,650.00 | How many Rooms/Units do you need? | BOOK NOW | Fullboard | 1 Guest | 2 Guests | 3 Guests | Daily Rate | R1,700.00 | R3,104.00 | R4,054.00 | How many Rooms/Units do you need? | BOOK NOW | Parrot Private Unit | Private open plan unit , | Fully fitted for self-catering ,meals supplied per order | two double beds | smart TV.+Wifi | courtyard to smoke and braai. | SHOW MORE | Max Guests: 3",
+  "hints": {
+    "cardNum": false,
+    "cvv": false,
+    "payBtn": true,
+    "payIframe": false,
+    "guestFields": true
+  }
+}

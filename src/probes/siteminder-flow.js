@@ -32,29 +32,15 @@ import { chromium } from 'playwright-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 chromium.use(StealthPlugin());
 
+// Slugs verified 2026-07-02 by inspecting each homepage's "Book Now" anchor.
+// Ivy City: https://app.thebookingbutton.com/properties/ivycityhoteldirect
+// Nantucket: https://app.thebookingbutton.com/whale/properties/nantucketdirect
+//   (note the per-property partner alias "/whale/" before /properties/)
+// Tremola: discovered live -> BedNBikeTremolaSanGottardoDIRECT
 const PROPERTIES = [
-  {
-    name: 'Ivy City Hotel',
-    homepage: 'https://www.ivycityhotel.com/',
-    // Homepage "Book Now" / "Check Rates" anchor (resolved at runtime):
-    expectedBookHost: ['thebookingbutton.com', 'direct-book.com'],
-    slug: 'ivycityhoteldirect',
-    currency: 'USD',
-  },
-  {
-    name: 'Nantucket Whale Inn',
-    homepage: 'https://www.nantucketwhaleinn.com/',
-    expectedBookHost: ['thebookingbutton.com', 'direct-book.com'],
-    slug: null, // discovered at runtime from the homepage book link
-    currency: 'USD',
-  },
-  {
-    name: 'Tremola San Gottardo',
-    homepage: 'https://www.tremola-sangottardo.ch/english',
-    expectedBookHost: ['thebookingbutton.com', 'direct-book.com'],
-    slug: null,
-    currency: 'CHF',
-  },
+  { name: 'Ivy City Hotel', homepage: 'https://www.ivycityhotel.com/', slug: 'ivycityhoteldirect', currency: 'USD' },
+  { name: 'Nantucket Whale Inn', homepage: 'https://www.nantucketwhaleinn.com/', slug: 'nantucketdirect', currency: 'USD' },
+  { name: 'Tremola San Gottardo', homepage: 'https://www.tremola-sangottardo.ch/english', slug: 'BedNBikeTremolaSanGottardoDIRECT', currency: 'CHF' },
 ];
 
 const fmt = (d) => d.toISOString().slice(0, 10);
@@ -68,30 +54,29 @@ function targetDates() {
 }
 
 function deepLink(slug, dates, currency) {
-  // Confirmed date-prefilled SiteMinder URL. thebookingbutton.com also works as
-  // an entry alias and redirects here, but going straight to direct-book.com
-  // is one fewer hop.
-  const u = new URL(`https://direct-book.com/properties/${slug}`);
-  u.searchParams.set('locale', 'en');
-  u.searchParams.set('currency', currency);
-  // Bracketed array params — must be appended literally (URLSearchParams would
-  // percent-encode the brackets; direct-book.com accepts BOTH encoded and raw,
-  // but raw matches what the SPA itself emits).
-  u.searchParams.append('items[0][adults]', '2');
-  u.searchParams.append('items[0][children]', '0');
-  u.searchParams.append('items[0][infants]', '0');
-  u.searchParams.set('checkInDate', dates.checkIn);
-  u.searchParams.set('checkOutDate', dates.checkOut);
-  return u.toString();
+  // Confirmed date-prefilled SiteMinder URL, built as a RAW string.
+  // The SPA emits raw (un-encoded) [] brackets in the query string and that is
+  // the form it itself redirects to; building via URLSearchParams percent-encodes
+  // the brackets, which the SPA also accepts, but raw matches the canonical form
+  // observed in the live network log.
+  return (
+    `https://direct-book.com/properties/${slug}` +
+    `?locale=en` +
+    `&items[0][adults]=2&items[0][children]=0&items[0][infants]=0` +
+    `&currency=${currency}` +
+    `&checkInDate=${dates.checkIn}&checkOutDate=${dates.checkOut}`
+  );
 }
 
 async function discoverSlug(page, homepage) {
   // Load homepage, find the Book link, extract the property slug.
   await page.goto(homepage, { waitUntil: 'domcontentloaded', timeout: 45000 });
-  // Any anchor whose href hits thebookingbutton.com / direct-book.com.
+  // Anchors whose href hits thebookingbutton.com / direct-book.com with a
+  // /properties/<slug> segment anywhere in the path (Nantucket inserts a
+  // partner-alias segment like /whale/ before /properties/).
   const href = await page.evaluate(() => {
     const a = [...document.querySelectorAll('a[href]')].find(a =>
-      /thebookingbutton\.com\/properties\/|direct-book\.com\/properties\//.test(a.href)
+      /(thebookingbutton|direct-book)\.com\/.*\/properties\//.test(a.href)
     );
     return a ? a.href : null;
   });
@@ -128,14 +113,39 @@ async function runOne(browser, prop, dates) {
     result.slug = slug;
 
     // 2. Deep link straight to results (date-prefilled — bypasses calendar).
+    // NOTE: use domcontentloaded, NOT networkidle — the Vue SPA keeps a long-lived
+    // connection open so networkidle never fires within 60s.
     const url = deepLink(slug, dates, prop.currency);
     result.deepLink = url;
-    await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
     result.steps.push('goto deep-link results');
 
-    // 3. Dismiss cookie banner (blocks all clicks until dismissed).
-    const cookieBtn = page.locator('button[data-sm-test="cookies-accept-all"]');
-    await cookieBtn.first().click({ timeout: 15000 }).catch(() => {});
+    // Dismiss cookie banner. CRITICAL: a full-viewport .cookie-overlay div
+    // intercepts ALL pointer events until the Accept button is PLAYWRIGHT-clicked
+    // (a raw JS el.click() does NOT tear down the overlay — verified). The
+    // banner mounts slightly after domcontentloaded, so wait for the button to
+    // be visible first; retry up to 3x.
+    const dismissCookies = async () => {
+      for (let i = 0; i < 3; i++) {
+        const btn = page.locator('button[data-sm-test="cookies-accept-all"]').first();
+        try {
+          await btn.waitFor({ state: 'visible', timeout: 8000 });
+          await btn.click({ timeout: 8000 });
+        } catch {
+          continue;
+        }
+        // Confirm the overlay is actually gone before returning.
+        const gone = await page.evaluate(() => {
+          const o = document.querySelector('.cookie-overlay');
+          if (!o) return true;
+          const cs = getComputedStyle(o);
+          return cs.display === 'none' || cs.visibility === 'hidden' || cs.opacity === '0';
+        });
+        if (gone) return true;
+      }
+      return false;
+    };
+    await dismissCookies();
     result.steps.push('dismiss cookie banner');
 
     // 4. Wait for at least one rate "Select" button.
@@ -145,8 +155,11 @@ async function runOne(browser, prop, dates) {
     result.firstRateSelectAttr = selectLabel;
     result.steps.push('rate list rendered');
 
-    // 5. Click "Select" on the first available rate.
-    await selectBtn.click();
+    // 5. Click "Select" on the first available rate (force-click fallback in
+    //    case a lingering overlay still intercepts).
+    await selectBtn.click().catch(async () => {
+      await selectBtn.click({ force: true });
+    });
     result.steps.push('click rate Select');
 
     // 6. Summary "Book" button enables -> click -> /book?...step=step1.
@@ -159,11 +172,20 @@ async function runOne(browser, prop, dates) {
       },
       { timeout: 15000 }
     );
-    await bookBtn.click();
+    await bookBtn.click().catch(async () => {
+      await bookBtn.click({ force: true });
+    });
     await page.waitForURL(/\/book\?.*step=/, { timeout: 30000 });
     result.steps.push('click summary Book -> checkout /book step1');
 
+    // The cookie banner can re-mount on the /book route (separate SPA view) —
+    // dismiss again so it doesn't block the guest-details form clicks.
+    await dismissCookies();
+
     // 7. Fill guest-details (Step 1) -> Continue.
+    // The Vue SPA re-renders the route after the URL change; wait for the form
+    // to be ready before filling or fill() can race the teardown and time out.
+    await page.locator('#firstName').waitFor({ state: 'visible', timeout: 30000 });
     await page.locator('#firstName').fill('Test');
     await page.locator('#lastName').fill('Booker');
     await page.locator('#email').fill('frictionstudy+test@example.com');
@@ -173,17 +195,49 @@ async function runOne(browser, prop, dates) {
     await page.locator('#city').fill('Washington');
     await page.locator('#state').fill('DC');
     await page.locator('#postCode').fill('20002');
-    // Country is a vue-select combobox.
-    const countryCombobox = page.locator('input[id^="uid-"][id$="-ibe-v-select"]').first();
-    await countryCombobox.fill('United States');
-    await page
-      .locator('.vs__dropdown-menu .vs__dropdown-option', { hasText: 'United States' })
-      .first()
-      .click();
+    // Country is a vue-select (v-select) combobox. The autocomplete attribute
+    // ("country-name") is the stable cross-property hook (IDs are generated
+    // per page-load).
+    const country = page.locator('input[autocomplete="country-name"]');
+    if ((await country.count()) > 0) {
+      await country.fill('United States');
+      await page
+        .locator('.vs__dropdown-menu .vs__dropdown-option', { hasText: 'United States' })
+        .first()
+        .click();
+    }
+    // Some properties add EXTRA required v-select dropdowns (Nantucket:
+    // "How did you hear about us?" -> placeholder="Please select...", and
+    // "Planned arrival time?" -> placeholder="Select time"). Pick the first
+    // option of each — the value is irrelevant; we only need to satisfy
+    // client-side validation to reach the payment page.
+    for (const placeholder of ['Please select...', 'Select time']) {
+      const sel = page.locator(`input[placeholder="${placeholder}"]`);
+      if ((await sel.count()) > 0) {
+        await sel.click();
+        await page.locator('.vs__dropdown-menu .vs__dropdown-option').first().click();
+      }
+    }
     result.steps.push('fill guest details');
 
     await page.locator('button[data-sm-test="guest-details-continue"]').click();
     result.steps.push('click guest-details Continue');
+
+    // OPTIONAL Extras upsell step. Some properties (Nantucket) insert a
+    // Step 2 "Extras" page between guest-details and payment. If a Skip or
+    // extras-Continue button is present AND we are not yet on the payment
+    // page, advance past it.
+    {
+      const extrasSkip = page.locator('button[data-sm-test="extras-skip-button-top"]');
+      const extrasContinue = page.locator('button[data-sm-test="extras-continue"]');
+      if ((await extrasSkip.count()) > 0) {
+        await extrasSkip.first().click();
+        result.steps.push('skip Extras upsell step (property-specific)');
+      } else if ((await extrasContinue.count()) > 0) {
+        await extrasContinue.first().click();
+        result.steps.push('continue past Extras upsell step');
+      }
+    }
 
     // 8. Reach payment-gate: /book?...step=step3 with proceed-to-payment button.
     await page.waitForFunction(
@@ -191,14 +245,12 @@ async function runOne(browser, prop, dates) {
       { timeout: 30000 }
     );
     const reachedUrl = page.url();
-    result.paymentReached =
-      /\/book\?/.test(reachedUrl) &&
-      (reachedUrl.includes('step=step3') ||
-        !!await page.locator('button[data-sm-test="proceed-to-payment"]').count());
+    const hasProceed = (await page.locator('button[data-sm-test="proceed-to-payment"]').count()) > 0;
+    result.paymentReached = /\/book\?/.test(reachedUrl) && hasProceed;
     result.paymentPageUrl = reachedUrl;
     result.paymentIndicator =
-      'URL contains /book?...step=step3 AND button[data-sm-test="proceed-to-payment"] present';
-    result.steps.push('PAYMENT PAGE REACHED (step3 + proceed-to-payment)');
+      'URL contains /book?... AND button[data-sm-test="proceed-to-payment"] is in the DOM';
+    result.steps.push('PAYMENT PAGE REACHED (proceed-to-payment present)');
 
     // reCAPTCHA posture check (do NOT proceed).
     const captcha = await page.evaluate(() => {

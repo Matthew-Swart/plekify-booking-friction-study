@@ -27,7 +27,7 @@ export const PROPERTIES = [
   // ---------------- NIGHTSBRIDGE (v1-verified working) ----------------
   { system: 'nightsbridge', name: 'Atlantic View', homepageUrl: 'https://atlanticviewcapetown.com/', bookingUrl: 'https://book.nightsbridge.com/30738', tier: 'upscale', volumeClass: 'low', region: 'Africa', distribution: 'direct+ota' },
   { system: 'nightsbridge', name: 'Thali Thali', homepageUrl: 'https://www.thalithali.co.za/', bookingUrl: 'https://book.nightsbridge.com/19876', tier: 'midscale', volumeClass: 'low', region: 'Africa', distribution: 'direct+ota' },
-  { system: 'nightsbridge', name: 'Lairds Lodge', homepageUrl: 'https://www.lairdslodge.co.za/', tier: 'upscale', volumeClass: 'low', region: 'Africa', distribution: 'direct+ota' },
+  { system: 'nightsbridge', name: 'Lairds Lodge', homepageUrl: 'https://www.lairdslodge.co.za/', bookingUrl: 'https://book.nightsbridge.com/12292', tier: 'upscale', volumeClass: 'low', region: 'Africa', distribution: 'direct+ota' },
 
   // ---------------- ROOMRACCOON (agent-blocked exhibit — retained, not excluded) ----------------
   { system: 'roomraccoon', name: 'Glen Hotel', homepageUrl: 'https://glenhotel.co.za/', tier: 'upscale', volumeClass: 'low', region: 'Africa', distribution: 'direct+ota' },

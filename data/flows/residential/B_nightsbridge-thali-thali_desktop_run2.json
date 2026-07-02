@@ -1,0 +1,32 @@
+{
+  "system": "nightsbridge",
+  "property": "Thali Thali",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 2,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "reached-payment",
+  "reason": "ok",
+  "clicks": 6,
+  "handoffs": 0,
+  "fields": 18,
+  "latencySec": 2.98,
+  "interruptions": 0,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 1,
+  "measuredLfi": 17,
+  "scoredLfi": 17,
+  "completionPct": 15.7,
+  "durationSec": 16.4,
+  "commit": "a1b77a9",
+  "ts": "2026-07-02T12:05:16.904Z",
+  "origins": [
+    "https://book.nightsbridge.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

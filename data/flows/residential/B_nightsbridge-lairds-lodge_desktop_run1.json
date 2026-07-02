@@ -1,0 +1,32 @@
+{
+  "system": "nightsbridge",
+  "property": "Lairds Lodge",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 1,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "reached-payment",
+  "reason": "ok",
+  "clicks": 6,
+  "handoffs": 0,
+  "fields": 15,
+  "latencySec": 2.63,
+  "interruptions": 0,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 1,
+  "measuredLfi": 14,
+  "scoredLfi": 14,
+  "completionPct": 18.1,
+  "durationSec": 16.1,
+  "commit": "a1b77a9",
+  "ts": "2026-07-02T12:05:35.478Z",
+  "origins": [
+    "https://book.nightsbridge.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

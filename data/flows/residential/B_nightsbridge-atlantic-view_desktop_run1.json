@@ -1,0 +1,33 @@
+{
+  "system": "nightsbridge",
+  "property": "Atlantic View",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 1,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "redirected-off-domain",
+  "reason": "payment-on-third-party-domain",
+  "clicks": 7,
+  "handoffs": 1,
+  "fields": 16,
+  "latencySec": 3.85,
+  "interruptions": 0,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 1,
+  "measuredLfi": 22.6,
+  "scoredLfi": 22.6,
+  "completionPct": 10.6,
+  "durationSec": 18.5,
+  "commit": "a1b77a9",
+  "ts": "2026-07-02T12:10:53.881Z",
+  "origins": [
+    "https://atlanticviewcapetown.com",
+    "https://book.nightsbridge.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

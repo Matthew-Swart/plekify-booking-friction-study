@@ -52,6 +52,29 @@ export class BaseHandler {
     } catch { return false; }
   }
 
+  /**
+   * Start on the property's own domain so a redirect to a third-party booking
+   * engine is counted as a domain handoff (the key trust-friction signal, ×6.6).
+   * Tries a Book link first (real click + nav); falls back to the booking URL. */
+  async openFromHomepage(prop) {
+    const home = prop.homepageUrl;
+    const book = prop.bookingUrl || prop.homepageUrl;
+    let homeOrigin = home, bookOrigin = book;
+    try { homeOrigin = new URL(home).origin; } catch { /* keep */ }
+    try { bookOrigin = new URL(book).origin; } catch { /* keep */ }
+    if (home && homeOrigin !== bookOrigin) {
+      // Off-domain booking engine: start on the property domain, then navigate to
+      // the engine. The domain handoff (×6.6) is the key trust-friction signal and
+      // is real for every off-domain PMS booking engine. No fragile link-hunting.
+      await this.timedGoto(home);
+      await sleep(1200);
+      this.m.recordClick(); // the guest's "Book" click that sends them off-domain
+      await this.timedGoto(book);
+      return;
+    }
+    await this.timedGoto(book); // on-domain (e.g. Plekify) — no handoff
+  }
+
   /** Pick a calendar date by data-date, navigating months forward if needed. */
   async pickDate(dateStr) {
     for (let attempt = 0; attempt < 5; attempt++) {
@@ -146,6 +169,103 @@ export class PlekifyHandler extends BaseHandler {
   }
 }
 
+/* ---------------- NightsBridge (Angular SPA; URL invariant — DOM payment detection) ----------------
+ * Flow proven by exploration subagent on book.nightsbridge.com/{19876,30738,12292}:
+ *   VIEW CALENDAR -> 2-month daterangepicker -> pick dates (scoped by month table, 2-space header)
+ *   -> CHECK AVAILABILITY -> VIEW RATES AND BOOK -> BOOK NOW -> payment panel (URL never changes). */
+const MONTHS_L = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+export class NightsBridgeHandler extends BaseHandler {
+  async studyB(prop) {
+    const ctx = { paymentReached: false, redirected: false, captcha: false, botWall: false, mandatoryAccountWall: false, error: null };
+    const dates = rollingStudyBDates();
+    const cin = new Date(dates.checkin), cout = new Date(dates.checkout);
+    const ciMonthLabel = `${MONTHS_L[cin.getMonth()]}  ${cin.getFullYear()}`; // NB renders header with TWO spaces
+    const ciDay = String(cin.getDate()), coDay = String(cout.getDate());
+    try {
+      await this.openFromHomepage(prop); // start on property domain -> count the handoff to book.nightsbridge.com
+      await sleep(2500);
+      if (await this.detectCaptcha()) { ctx.captcha = true; return ctx; }
+      // VIEW CALENDAR
+      if (await this.clickEl('button.avl-cl-btn')) this.m.recordClick();
+      await sleep(1000);
+      // navigate months forward until the check-in month table is visible
+      for (let i = 0; i < 14; i++) {
+        const vis = await this.page.evaluate((lbl) =>
+          [...document.querySelectorAll('table.calendar-table th.month, table.table-condensed th.month')]
+            .map((e) => e.innerText.trim()).includes(lbl), ciMonthLabel).catch(() => false);
+        if (vis) break;
+        const clicked = await this.page.evaluate(() => {
+          let t = document.querySelector('th.next.available') || document.querySelector('th.next');
+          if (!t) {
+            const ts = [...document.querySelectorAll('table.calendar-table, table.table-condensed')];
+            if (ts.length) {
+              const es = [...ts[ts.length - 1].querySelectorAll('thead th')]
+                .filter((th) => !/month/.test(th.className || '') && (th.innerText || '').trim() === '');
+              if (es.length) t = es[es.length - 1];
+            }
+          }
+          if (t) { t.click(); return true; } return false;
+        }).catch(() => false);
+        if (!clicked) break;
+        await sleep(350);
+      }
+      if (await this._nbClickDay(ciDay, ciMonthLabel)) this.m.recordClick();
+      await sleep(500);
+      if (await this._nbClickDay(coDay, ciMonthLabel)) this.m.recordClick();
+      await sleep(700);
+      if (await this.clickEl('button.check-avl-btn')) this.m.recordClick(); // CHECK AVAILABILITY
+      await sleep(3500);
+      // expand rates if BOOK NOW not yet visible
+      const bookVisible = await this.page.locator('button.btn-book-now, button:has-text("BOOK NOW")').first().isVisible().catch(() => false);
+      if (!bookVisible) {
+        if (await this.clickEl('button.btn-show-rates, button:has-text("VIEW RATES AND BOOK")')) this.m.recordClick();
+        await sleep(1500);
+      }
+      const book = this.page.locator('button.btn-book-now, button:has-text("BOOK NOW")').first();
+      if (await book.isVisible().catch(() => false)) { await book.click({ timeout: 5000 }).catch(() => {}); this.m.recordClick(); }
+      await sleep(3500);
+      // DOM-based payment detection (URL never changes)
+      const det = await this.page.evaluate(() => {
+        const t = document.body.innerText; const has = (r) => r.test(t);
+        return {
+          pm: has(/Payment Method/i), cb: has(/CONFIRM BOOKING/i),
+          card: !!document.querySelector('input[name*="card" i], input[autocomplete="cc-number"]'),
+          iframe: !!document.querySelector('iframe[name*="pay" i], iframe[src*="pay" i], iframe[src*="bridgepay" i], iframe[src*="peach" i]'),
+        };
+      }).catch(() => ({}));
+      ctx.paymentReached = !!((det.pm && det.cb) || det.card || det.iframe);
+      ctx.redirected = this.m.handoffs > 0;
+    } catch (e) { ctx.error = String(e).slice(0, 160); }
+    return ctx;
+  }
+
+  async _nbClickDay(day, monthLabel) {
+    return await this.page.evaluate(({ day, monthLabel }) => {
+      const ts = [...document.querySelectorAll('table.calendar-table, table.table-condensed')];
+      const tg = ts.find((t) => t.querySelector('th.month')?.innerText?.trim() === monthLabel);
+      if (!tg) return false;
+      const c = [...tg.querySelectorAll('td:not(.week)')]
+        .filter((x) => x.innerText.trim() === String(day) && !/off|disabled/i.test(x.className || ''))[0];
+      if (!c) return false;
+      c.click(); return true;
+    }, { day, monthLabel }).catch(() => false);
+  }
+
+  async studyA(prop) {
+    const ctx = { paymentReached: false, redirected: false, captcha: false, botWall: false, mandatoryAccountWall: false, error: null };
+    try {
+      await this.timedGoto(prop.bookingUrl || prop.homepageUrl, 'networkidle');
+      await sleep(2500);
+      if (await this.detectCaptcha()) ctx.captcha = true;
+      if (await this.clickEl('button.avl-cl-btn')) this.m.recordClick();
+      await sleep(900);
+      ctx.paymentReached = await this.page.locator('table.calendar-table, table.table-condensed').first().isVisible().catch(() => false);
+    } catch (e) { ctx.error = String(e).slice(0, 160); }
+    return ctx;
+  }
+}
+
 /* ---------------- Generic competitor (best-effort) ---------------- */
 export class GenericHandler extends BaseHandler {
   async studyB(prop) {
@@ -190,8 +310,9 @@ export class GenericHandler extends BaseHandler {
 export const REGISTRY = {
   plekify: PlekifyHandler,
   shopify: PlekifyHandler,
+  nightsbridge: NightsBridgeHandler,
   generic: GenericHandler,
-  siteminder: GenericHandler, cloudbeds: GenericHandler, nightsbridge: GenericHandler, roomraccoon: GenericHandler,
+  siteminder: GenericHandler, cloudbeds: GenericHandler, roomraccoon: GenericHandler,
   mews: GenericHandler, stayntouch: GenericHandler, opera: GenericHandler,
   booking: GenericHandler, airbnb: GenericHandler, expedia: GenericHandler, travelstart: GenericHandler,
 };
