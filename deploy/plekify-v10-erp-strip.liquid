@@ -1,0 +1,60 @@
+{% comment %}
+  ═══════════════════════════════════════════════════════════════
+  PLEKIFY V10 — ERP-ready strip (doc 52 §1, secondary strip under hero)
+  ═══════════════════════════════════════════════════════════════
+  Compact full-bleed strip directly below the hero. Keeps the consumer
+  hero intact, makes the ERP/partner story visible (so a finance/IT buyer
+  or partner sees it without re-framing the lodge-owner pitch). GENERIC
+  on the public site (no Acumatica/HIA by name — avoids implying a signed
+  deal); the /partners page makes it concrete. Grayscale · Geist · tokens.
+  ═══════════════════════════════════════════════════════════════
+{% endcomment %}
+
+<div class="plekify-v10 plekify-v10-erp-strip" id="erp-{{ section.id }}">
+  <div class="plk-erp-strip__inner">
+    <span class="plk-erp-strip__chip">{{ section.settings.chip | default: 'ERP-ready' }}</span>
+    <p class="plk-erp-strip__copy">{{ section.settings.copy }}</p>
+    {% if section.settings.cta_label != blank %}
+      <a class="plk-erp-strip__cta plk-link" href="{{ section.settings.cta_url | default: 'mailto:matt@plekify.com' }}">{{ section.settings.cta_label }} →</a>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .plekify-v10-erp-strip { background: var(--plk-ink, #171717); color: #FFFFFF; }
+  .plekify-v10-erp-strip .plk-erp-strip__inner {
+    max-width: 1180px; margin: 0 auto; padding: 18px clamp(20px, 4vw, 40px);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px;
+    font-family: var(--font-body), 'Geist', system-ui, sans-serif;
+  }
+  .plekify-v10-erp-strip .plk-erp-strip__chip {
+    font-family: var(--font-mono), 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #FFFFFF; opacity: 0.7;
+    border: 1px solid rgba(255,255,255,0.3); padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+  }
+  .plekify-v10-erp-strip .plk-erp-strip__copy {
+    flex: 1 1 360px; margin: 0; font-size: clamp(15px, 1.4vw, 17px); line-height: 1.5; color: #FFFFFF;
+  }
+  .plekify-v10-erp-strip .plk-erp-strip__cta {
+    font-family: var(--font-mono), 'Geist Mono', monospace; font-size: 13px; color: #FFFFFF;
+    text-decoration: underline; text-underline-offset: 4px; white-space: nowrap;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "V10 ERP-ready Strip",
+  "tag": "section",
+  "class": "plekify-v10-erp-strip-section",
+  "limit": 1,
+  "settings": [
+    { "type": "text", "id": "chip", "label": "Chip", "default": "ERP-ready" },
+    { "type": "textarea", "id": "copy", "label": "Strip copy", "default": "Plekify also plugs into your ERP — a nightly batch of reservations, folios and taxes posts cleanly to your general ledger. You generate the revenue on Shopify; your back office accounts for it." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "For ERP partners" },
+    { "type": "url", "id": "cta_url", "label": "CTA URL" }
+  ],
+  "presets": [
+    { "name": "V10 ERP-ready Strip", "category": "Plekify" }
+  ]
+}
+{% endschema %}

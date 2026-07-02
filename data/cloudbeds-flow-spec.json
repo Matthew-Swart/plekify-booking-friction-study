@@ -1,0 +1,154 @@
+{
+  "system": "cloudbeds",
+  "deepLinkPattern": "https://hotels.cloudbeds.com/en/reservation/SoRbvN?date=2026-08-16&nights=2&adults=2",
+  "deepLinkFormat": "date+nights",
+  "canonicalReservationPattern": "https://hotels.cloudbeds.com/reservation/<PROPERTY_ID>",
+  "iframe": {
+    "present": true,
+    "selector": null,
+    "notes": "mixed: some sites embed in iframe, others full-page redirect"
+  },
+  "cookieDismiss": {
+    "selector": "button:has-text(\"Accept\")"
+  },
+  "steps": [
+    {
+      "action": "click",
+      "selector": "role=link[name=\"Book\"]",
+      "desc": "homepage Book link (href=https://facebook.com/SALTLINEHOTEL)"
+    }
+  ],
+  "captchaObserved": false,
+  "paymentReached": false,
+  "paymentIndicator": null,
+  "perProperty": [
+    {
+      "property": "Saltline Hotel",
+      "homepageUrl": "https://www.saltlinehotel.com/",
+      "bookingEngineUrl": null,
+      "iframe": {
+        "present": false,
+        "selector": null
+      },
+      "cookieDismiss": {
+        "selector": "button:has-text(\"Accept\")"
+      },
+      "dateParams": {
+        "works": false,
+        "sampleUrl": null,
+        "format": null
+      },
+      "captcha": {
+        "visible": false,
+        "kind": null
+      },
+      "steps": [
+        {
+          "action": "click",
+          "selector": "role=link[name=\"Book\"]",
+          "desc": "homepage Book link (href=https://facebook.com/SALTLINEHOTEL)"
+        }
+      ],
+      "paymentReached": false,
+      "paymentIndicator": null,
+      "gotchas": [],
+      "errors": [
+        "no cloudbeds engine reached",
+        "TypeError: Cannot read properties of undefined (reading 'vis')"
+      ],
+      "navHistory": [
+        "https://www.saltlinehotel.com/"
+      ]
+    },
+    {
+      "property": "Sea Esta Komodo",
+      "homepageUrl": "https://seaestakomodo.com/",
+      "bookingEngineUrl": null,
+      "iframe": {
+        "present": false,
+        "selector": null
+      },
+      "cookieDismiss": {
+        "selector": null
+      },
+      "dateParams": {
+        "works": false,
+        "sampleUrl": null,
+        "format": null
+      },
+      "captcha": {
+        "visible": false,
+        "kind": null
+      },
+      "steps": [],
+      "paymentReached": false,
+      "paymentIndicator": null,
+      "gotchas": [],
+      "errors": [
+        "no Book affordance found on homepage",
+        "no cloudbeds engine reached",
+        "TypeError: Cannot read properties of undefined (reading 'vis')"
+      ],
+      "navHistory": [
+        "https://seaestakomodo.com/",
+        "https://seaestakomodo.com/.well-known/sgcaptcha/?r=%2F&y=ipr:102.182.190.248:1782993146.865",
+        "https://seaestakomodo.com/.well-known/sgcaptcha/?r=%2F&sol=MjE6MTc4Mjk5MzE0NzozMjZhNzU3OTpjNGFkNWMyMjI2NDhiZGMxM2FkZjQ2ZTk4MDJjM2U0NmMxODg5ZDNiZDc0ZmM4YTgyZDEzOGUwMWUxZmJhOWFkOqjxhg%3D%3D&s=3403:1657910",
+        "https://seaestakomodo.com/"
+      ]
+    },
+    {
+      "property": "Fatwave Surf Resort",
+      "homepageUrl": "https://www.fatwavesurfresort.com/",
+      "bookingEngineUrl": "https://hotels.cloudbeds.com/en/reservation/SoRbvN?currency=php",
+      "iframe": {
+        "present": true,
+        "selector": null
+      },
+      "cookieDismiss": {
+        "selector": null
+      },
+      "dateParams": {
+        "works": true,
+        "sampleUrl": "https://hotels.cloudbeds.com/en/reservation/SoRbvN?date=2026-08-16&nights=2&adults=2",
+        "format": "date+nights"
+      },
+      "captcha": {
+        "visible": false,
+        "kind": null
+      },
+      "steps": [
+        {
+          "action": "click",
+          "selector": "text=\"Book Now\"",
+          "desc": "homepage Book affordance (href=https://hotels.cloudbeds.com/reservation/SoRbvN)"
+        }
+      ],
+      "paymentReached": false,
+      "paymentIndicator": null,
+      "gotchas": [
+        "stopped at: https://hotels.cloudbeds.com/en/reservation/SoRbvN?currency=php"
+      ],
+      "errors": [
+        "no room Book button found"
+      ],
+      "navHistory": [
+        "https://www.fatwavesurfresort.com/",
+        "https://hotels.cloudbeds.com/reservation/SoRbvN",
+        "https://hotels.cloudbeds.com/reservation/SoRbvN",
+        "https://hotels.cloudbeds.com/en/reservation/SoRbvN",
+        "https://hotels.cloudbeds.com/reservation/SoRbvN?currency=php",
+        "https://hotels.cloudbeds.com/en/reservation/SoRbvN?currency=php"
+      ]
+    }
+  ],
+  "gotchas": [
+    "stopped at: https://hotels.cloudbeds.com/en/reservation/SoRbvN?currency=php",
+    "Cloudbeds reservation ID is per-property in the path; date query params work (date=YYYY-MM-DD&nights=N&adults=N)",
+    "Calendar day cells use [data-date=\"YYYY-MM-DD\"]; advance month with [class*=\"next\"] / aria-label*=\"ext\"",
+    "When sold out for the test dates, no Book button appears — use rolling dates T+45/T+47"
+  ],
+  "testDates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}
