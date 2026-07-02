@@ -106,8 +106,13 @@ ars_out = {}
 for sys, byeg in ars_summary.items():
     res = byeg.get("residential", [])
     if not res: continue
-    def m(k): return round(statistics.mean([r[k] for r in res]), 2)
-    ars_out[sys] = dict(n=len(res), ars=m("ars"), SD=m("SD"), BM=m("BM"), CW=m("CW"), AP=m("AP"), API=m("API"), PA=m("PA"))
+    dat = byeg.get("datacenter", [])
+    def mean(rows, k): return round(statistics.mean([r[k] for r in rows]), 2) if rows else None
+    ars_res = mean(res, "ars"); ars_dat = mean(dat, "ars")
+    delta = round(ars_res - ars_dat, 2) if (ars_res is not None and ars_dat is not None) else None
+    ars_out[sys] = dict(n_res=len(res), n_dat=len(dat), ars=ars_res, ars_datacenter=ars_dat,
+        cloud_agent_delta=delta, SD=mean(res,"SD"), BM=mean(res,"BM"), CW=mean(res,"CW"),
+        AP=mean(res,"AP"), API=mean(res,"API"), PA=mean(res,"PA"))
 
 # ---- 3. merge + write ----
 systems_order = ["plekify", "mews", "stayntouch", "cloudbeds", "siteminder", "nightsbridge", "roomraccoon", "opera", "booking", "airbnb", "expedia", "travelstart"]
@@ -139,12 +144,15 @@ for sys in systems_order:
     ci = fr.get("lfi_ci95") or [None, None]
     cistr = f"{ci[0]}–{ci[1]}" if ci[0] is not None else "—"
     L.append(f"| **{sys}** | {fr['n_runs']} | {fr['success_rate']:.0f}% | **{fr['mean_lfi_success']}** | {cistr} | {fr['mean_completion_pct']} | {fr['mean_handoffs']} | {fr['mean_pages']} |")
-L.append("\n## Agent Readiness (ARS, higher = better, 0–3) — v2 fresh probes\n")
-L.append("| System | n | **ARS** | SD | BM | CW | AP | API | PA |\n|---|---:|---:|---:|---:|---:|---:|---:|---:|")
+L.append("\n## Agent Readiness (ARS, 0–3, higher = better) — v2 fresh probes, both egresses\n")
+L.append("| System | ARS residential | ARS datacenter | Cloud-agent Δ | SD | BM | CW | AP | API | PA |\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
 for sys in systems_order:
     ar = ars_out.get(sys)
     if not ar: continue
-    L.append(f"| **{sys}** | {ar['n']} | **{ar['ars']}** | {ar['SD']} | {ar['BM']} | {ar['CW']} | {ar['AP']} | {ar['API']} | {ar['PA']} |")
+    d = ar.get('cloud_agent_delta')
+    dstr = f"{d:+.2f}" if d is not None else "—"
+    L.append(f"| **{sys}** | **{ar['ars']}** | {ar.get('ars_datacenter') if ar.get('ars_datacenter') is not None else '—'} | {dstr} | {ar['SD']} | {ar['BM']} | {ar['CW']} | {ar['AP']} | {ar['API']} | {ar['PA']} |")
+L.append("\n_Cloud-agent Δ (residential − datacenter ARS) is the cloud-agent-hostility signal (RQ4): a positive Δ means the system penalises datacenter IPs — where cloud AI agents run. Plekify Δ = 0.00 (equally agent-friendly from any IP); OTAs show the largest Δ._\n")
 L.append("\n_ITT (intent-to-treat) mean LFI (non-completed runs take the timeout-penalty floor):_\n")
 for sys in systems_order:
     fr = friction_summary.get(sys)

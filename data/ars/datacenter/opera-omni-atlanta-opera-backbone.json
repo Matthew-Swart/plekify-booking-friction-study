@@ -1,0 +1,60 @@
+{
+  "system": "opera",
+  "name": "Omni Atlanta (OPERA backbone)",
+  "egress": "datacenter",
+  "geo": "DE",
+  "ip": "144.76.83.21",
+  "org": "AS24940 Hetzner Online GmbH",
+  "commit": "7914135",
+  "ts": "2026-07-02T10:16:17.830Z",
+  "homepageUrl": "https://www.omnihotels.com/",
+  "bookingUrl": "https://www.omnihotels.com/hotels/atlanta-centennial-park",
+  "ucpManifest": false,
+  "ars": 1.35,
+  "signals": {
+    "SD": 0,
+    "BM": 2,
+    "CW": 3,
+    "AP": 1,
+    "API": 1,
+    "PA": 1
+  },
+  "evidence": {
+    "SD": {
+      "error": "Error: page.evaluate: Execution context was destroyed, most likely because of a navigation",
+      "blocks": 0
+    },
+    "BM": {
+      "status": 200,
+      "robotsBytes": 154,
+      "blockedAi": [],
+      "agentPositive": false,
+      "wildcardBlock": false,
+      "blocksSearch": false
+    },
+    "CW": {
+      "status": 200,
+      "visCaptcha": false,
+      "widget": false,
+      "text": false,
+      "defensive": false,
+      "blocked": false
+    },
+    "AP": {
+      "source": "dom",
+      "shopPay": false,
+      "applePay": false,
+      "googlePay": false,
+      "paypal": false
+    },
+    "API": {
+      "foundPortal": false,
+      "knownPosture": 1,
+      "probed": 5
+    },
+    "PA": {
+      "a2a": false,
+      "aiPlugin": false
+    }
+  }
+}

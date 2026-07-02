@@ -1,0 +1,56 @@
+{
+  "system": "plekify",
+  "name": "Plekify · Simbavati",
+  "egress": "datacenter",
+  "geo": "DE",
+  "ip": "144.76.83.21",
+  "org": "AS24940 Hetzner Online GmbH",
+  "commit": "7914135",
+  "ts": "2026-07-02T10:12:15.418Z",
+  "homepageUrl": "https://plekify.com/pages/simbavati",
+  "bookingUrl": "https://plekify.com/pages/simbavati",
+  "ucpManifest": true,
+  "ars": 3,
+  "signals": {
+    "SD": 3,
+    "BM": 3,
+    "CW": 3,
+    "AP": 3,
+    "API": 3,
+    "PA": 3
+  },
+  "evidence": {
+    "SD": {
+      "source": "ucp-catalog",
+      "jsonLdBlocks": 0
+    },
+    "BM": {
+      "status": 200,
+      "robotsBytes": 3610,
+      "blockedAi": [],
+      "agentPositive": true,
+      "wildcardBlock": false,
+      "blocksSearch": false
+    },
+    "CW": {
+      "status": 200,
+      "visCaptcha": false,
+      "widget": false,
+      "text": false,
+      "defensive": false,
+      "blocked": false
+    },
+    "AP": {
+      "source": "ucp-payment-handlers"
+    },
+    "API": {
+      "foundPortal": false,
+      "knownPosture": 3,
+      "probed": 5
+    },
+    "PA": {
+      "source": "ucp-manifest",
+      "real": true
+    }
+  }
+}

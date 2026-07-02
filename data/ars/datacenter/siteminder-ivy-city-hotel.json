@@ -1,0 +1,60 @@
+{
+  "system": "siteminder",
+  "name": "Ivy City Hotel",
+  "egress": "datacenter",
+  "geo": "DE",
+  "ip": "144.76.83.21",
+  "org": "AS24940 Hetzner Online GmbH",
+  "commit": "7914135",
+  "ts": "2026-07-02T10:12:27.588Z",
+  "homepageUrl": "https://www.ivycityhotel.com/",
+  "bookingUrl": "https://www.ivycityhotel.com/",
+  "ucpManifest": false,
+  "ars": 1.5,
+  "signals": {
+    "SD": 0,
+    "BM": 3,
+    "CW": 3,
+    "AP": 1,
+    "API": 1,
+    "PA": 1
+  },
+  "evidence": {
+    "SD": {
+      "error": "Error: page.evaluate: Execution context was destroyed, most likely because of a navigation",
+      "blocks": 0
+    },
+    "BM": {
+      "status": 404,
+      "robotsBytes": 906,
+      "blockedAi": [],
+      "agentPositive": false,
+      "wildcardBlock": false,
+      "blocksSearch": false
+    },
+    "CW": {
+      "status": 200,
+      "visCaptcha": false,
+      "widget": false,
+      "text": false,
+      "defensive": false,
+      "blocked": false
+    },
+    "AP": {
+      "source": "dom",
+      "shopPay": false,
+      "applePay": false,
+      "googlePay": false,
+      "paypal": false
+    },
+    "API": {
+      "foundPortal": false,
+      "knownPosture": 1,
+      "probed": 5
+    },
+    "PA": {
+      "a2a": false,
+      "aiPlugin": false
+    }
+  }
+}

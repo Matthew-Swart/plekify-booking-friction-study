@@ -66,8 +66,11 @@
   },
   "ars": {
     "stayntouch": {
-      "n": 6,
+      "n_res": 6,
+      "n_dat": 6,
       "ars": 1.57,
+      "ars_datacenter": 1.57,
+      "cloud_agent_delta": 0.0,
       "SD": 0,
       "BM": 0.83,
       "CW": 3,
@@ -76,8 +79,11 @@
       "PA": 1
     },
     "roomraccoon": {
-      "n": 4,
+      "n_res": 4,
+      "n_dat": 4,
       "ars": 1.44,
+      "ars_datacenter": 1.24,
+      "cloud_agent_delta": 0.2,
       "SD": 0,
       "BM": 2.25,
       "CW": 3,
@@ -86,8 +92,11 @@
       "PA": 1.5
     },
     "mews": {
-      "n": 6,
+      "n_res": 6,
+      "n_dat": 6,
       "ars": 1.87,
+      "ars_datacenter": 1.87,
+      "cloud_agent_delta": 0.0,
       "SD": 0,
       "BM": 2.33,
       "CW": 3,
@@ -96,8 +105,11 @@
       "PA": 1.67
     },
     "travelstart": {
-      "n": 1,
+      "n_res": 1,
+      "n_dat": 1,
       "ars": 1.4,
+      "ars_datacenter": 1.4,
+      "cloud_agent_delta": 0.0,
       "SD": 0,
       "BM": 1,
       "CW": 3,
@@ -106,8 +118,11 @@
       "PA": 3
     },
     "siteminder": {
-      "n": 4,
+      "n_res": 4,
+      "n_dat": 4,
       "ars": 1.5,
+      "ars_datacenter": 1.5,
+      "cloud_agent_delta": 0.0,
       "SD": 0,
       "BM": 3,
       "CW": 3,
@@ -116,8 +131,11 @@
       "PA": 1
     },
     "opera": {
-      "n": 2,
+      "n_res": 2,
+      "n_dat": 2,
       "ars": 1.2,
+      "ars_datacenter": 1.2,
+      "cloud_agent_delta": 0.0,
       "SD": 0,
       "BM": 1,
       "CW": 3,
@@ -126,8 +144,11 @@
       "PA": 1
     },
     "booking": {
-      "n": 1,
+      "n_res": 1,
+      "n_dat": 1,
       "ars": 1.75,
+      "ars_datacenter": 1.35,
+      "cloud_agent_delta": 0.4,
       "SD": 2,
       "BM": 2,
       "CW": 3,
@@ -136,8 +157,11 @@
       "PA": 1
     },
     "nightsbridge": {
-      "n": 3,
+      "n_res": 3,
+      "n_dat": 3,
       "ars": 1.35,
+      "ars_datacenter": 1.35,
+      "cloud_agent_delta": 0.0,
       "SD": 0,
       "BM": 2,
       "CW": 3,
@@ -146,8 +170,11 @@
       "PA": 1
     },
     "cloudbeds": {
-      "n": 3,
+      "n_res": 3,
+      "n_dat": 3,
       "ars": 2.03,
+      "ars_datacenter": 1.77,
+      "cloud_agent_delta": 0.26,
       "SD": 0.67,
       "BM": 3,
       "CW": 2.67,
@@ -156,8 +183,11 @@
       "PA": 1.67
     },
     "expedia": {
-      "n": 1,
+      "n_res": 1,
+      "n_dat": 1,
       "ars": 0.6,
+      "ars_datacenter": 0.6,
+      "cloud_agent_delta": 0.0,
       "SD": 0,
       "BM": 1,
       "CW": 0,
@@ -166,8 +196,11 @@
       "PA": 1
     },
     "plekify": {
-      "n": 3,
+      "n_res": 3,
+      "n_dat": 3,
       "ars": 3,
+      "ars_datacenter": 3,
+      "cloud_agent_delta": 0,
       "SD": 3,
       "BM": 3,
       "CW": 3,
@@ -176,8 +209,11 @@
       "PA": 3
     },
     "airbnb": {
-      "n": 1,
+      "n_res": 1,
+      "n_dat": 1,
       "ars": 1.25,
+      "ars_datacenter": 0.85,
+      "cloud_agent_delta": 0.4,
       "SD": 2,
       "BM": 0,
       "CW": 3,

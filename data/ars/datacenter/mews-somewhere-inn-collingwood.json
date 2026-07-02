@@ -1,0 +1,67 @@
+{
+  "system": "mews",
+  "name": "Somewhere Inn Collingwood",
+  "egress": "datacenter",
+  "geo": "DE",
+  "ip": "144.76.83.21",
+  "org": "AS24940 Hetzner Online GmbH",
+  "commit": "7914135",
+  "ts": "2026-07-02T10:14:40.148Z",
+  "homepageUrl": "https://somewhereinn.ca/collingwood/",
+  "bookingUrl": "https://app.mews.com/distributor/43156a17-4491-458d-8f08-b0c8009b6e0d",
+  "ucpManifest": false,
+  "ars": 1.75,
+  "signals": {
+    "SD": 1,
+    "BM": 2,
+    "CW": 2,
+    "AP": 1,
+    "API": 3,
+    "PA": 1
+  },
+  "evidence": {
+    "SD": {
+      "source": "json-ld",
+      "jsonLdBlocks": 1,
+      "types": [
+        "localbusiness"
+      ],
+      "hasLodging": false,
+      "hasOffer": false,
+      "hasPrice": false,
+      "hasAvailability": false
+    },
+    "BM": {
+      "status": 200,
+      "robotsBytes": 189,
+      "blockedAi": [],
+      "agentPositive": false,
+      "wildcardBlock": false,
+      "blocksSearch": false
+    },
+    "CW": {
+      "status": 200,
+      "visCaptcha": false,
+      "widget": false,
+      "text": false,
+      "defensive": true,
+      "blocked": false
+    },
+    "AP": {
+      "source": "dom",
+      "shopPay": false,
+      "applePay": false,
+      "googlePay": false,
+      "paypal": false
+    },
+    "API": {
+      "foundPortal": false,
+      "knownPosture": 3,
+      "probed": 5
+    },
+    "PA": {
+      "a2a": false,
+      "aiPlugin": false
+    }
+  }
+}

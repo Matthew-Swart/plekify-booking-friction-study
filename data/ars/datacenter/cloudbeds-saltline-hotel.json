@@ -1,0 +1,68 @@
+{
+  "system": "cloudbeds",
+  "name": "Saltline Hotel",
+  "egress": "datacenter",
+  "geo": "DE",
+  "ip": "144.76.83.21",
+  "org": "AS24940 Hetzner Online GmbH",
+  "commit": "7914135",
+  "ts": "2026-07-02T10:12:56.175Z",
+  "homepageUrl": "https://www.saltlinehotel.com/",
+  "bookingUrl": "https://www.saltlinehotel.com/",
+  "ucpManifest": false,
+  "ars": 2.3,
+  "signals": {
+    "SD": 2,
+    "BM": 3,
+    "CW": 3,
+    "AP": 1,
+    "API": 3,
+    "PA": 1
+  },
+  "evidence": {
+    "SD": {
+      "source": "json-ld",
+      "jsonLdBlocks": 2,
+      "types": [
+        "website",
+        "hotel"
+      ],
+      "hasLodging": true,
+      "hasOffer": false,
+      "hasPrice": false,
+      "hasAvailability": false
+    },
+    "BM": {
+      "status": 200,
+      "robotsBytes": 110,
+      "blockedAi": [],
+      "agentPositive": false,
+      "wildcardBlock": false,
+      "blocksSearch": false
+    },
+    "CW": {
+      "status": 200,
+      "visCaptcha": false,
+      "widget": false,
+      "text": false,
+      "defensive": false,
+      "blocked": false
+    },
+    "AP": {
+      "source": "dom",
+      "shopPay": false,
+      "applePay": false,
+      "googlePay": false,
+      "paypal": false
+    },
+    "API": {
+      "foundPortal": false,
+      "knownPosture": 3,
+      "probed": 5
+    },
+    "PA": {
+      "a2a": false,
+      "aiPlugin": false
+    }
+  }
+}
