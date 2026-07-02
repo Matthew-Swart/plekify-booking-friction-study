@@ -1,0 +1,32 @@
+{
+  "system": "plekify",
+  "property": "Plekify · Zannier Omaanda",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 1,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "reached-payment",
+  "reason": "ok",
+  "clicks": 4,
+  "handoffs": 0,
+  "fields": 22,
+  "latencySec": 1.8,
+  "interruptions": 0,
+  "autocomplete": true,
+  "accelerated": true,
+  "pageCount": 2,
+  "measuredLfi": 10.9,
+  "scoredLfi": 10.9,
+  "completionPct": 29.5,
+  "durationSec": 19.2,
+  "commit": "7337a97",
+  "ts": "2026-07-02T10:54:09.929Z",
+  "origins": [
+    "https://plekify.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

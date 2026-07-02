@@ -7,7 +7,8 @@
  *   node src/runner.js [--system X] [--study A|B|both] [--viewport desktop|mobile|both]
  *                      [--runs N] [--limit M] [--out DIR]
  */
-import { chromium } from 'playwright';
+import { chromium } from 'playwright-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { writeFileSync, mkdirSync, appendFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -51,7 +52,11 @@ async function main() {
       'measuredLfi', 'scoredLfi', 'completionPct', 'durationSec', 'commit', 'ts'].join(',') + '\n');
   }
 
-  const browser = await chromium.launch({ headless: true });
+  if (process.env.STEALTH !== '0') chromium.use(StealthPlugin()); // stealth off only if STEALTH=0
+  const browser = await chromium.launch({
+    headless: !process.env.HEADED,                                  // HEADED=1 => visible Chrome (residential human-realistic)
+    args: ['--disable-blink-features=AutomationControlled'],
+  });
   let count = 0;
   for (const prop of props) {
     const HandlerCls = REGISTRY[prop.system] || REGISTRY.generic;

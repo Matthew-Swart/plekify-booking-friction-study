@@ -1,0 +1,32 @@
+{
+  "system": "plekify",
+  "property": "Plekify · Hemingways Watamu",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 2,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "reached-payment",
+  "reason": "ok",
+  "clicks": 4,
+  "handoffs": 0,
+  "fields": 22,
+  "latencySec": 1.01,
+  "interruptions": 0,
+  "autocomplete": true,
+  "accelerated": true,
+  "pageCount": 2,
+  "measuredLfi": 10.9,
+  "scoredLfi": 10.9,
+  "completionPct": 29.5,
+  "durationSec": 18.1,
+  "commit": "7337a97",
+  "ts": "2026-07-02T10:53:48.218Z",
+  "origins": [
+    "https://plekify.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

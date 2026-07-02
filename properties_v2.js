@@ -8,10 +8,10 @@
  * password-protected client demo stores — keeps the baseline fair/representative.
  */
 export const PROPERTIES = [
-  // ---------------- PLEKIFY (public microsites on plekify.com) ----------------
-  { system: 'plekify', name: 'Plekify · Singita', homepageUrl: 'https://plekify.com/pages/singita', bookingUrl: 'https://plekify.com/pages/singita', tier: 'luxury', volumeClass: 'medium', region: 'Africa', distribution: 'direct+ota' },
-  { system: 'plekify', name: 'Plekify · Simbavati', homepageUrl: 'https://plekify.com/pages/simbavati', bookingUrl: 'https://plekify.com/pages/simbavati', tier: 'luxury', volumeClass: 'medium', region: 'Africa', distribution: 'direct+ota' },
-  { system: 'plekify', name: 'Plekify · Hemingways', homepageUrl: 'https://plekify.com/pages/hemingways', bookingUrl: 'https://plekify.com/pages/hemingways', tier: 'upscale', volumeClass: 'medium', region: 'Africa', distribution: 'direct+ota' },
+  // ---------------- PLEKIFY (public bookable product pages on plekify.com — travel-search widget) ----------------
+  { system: 'plekify', name: 'Plekify · Simbavati Hilltop', homepageUrl: 'https://plekify.com/products/simbavati-hilltop-lodge', bookingUrl: 'https://plekify.com/products/simbavati-hilltop-lodge', tier: 'luxury', volumeClass: 'medium', region: 'Africa', distribution: 'direct+ota' },
+  { system: 'plekify', name: 'Plekify · Hemingways Watamu', homepageUrl: 'https://plekify.com/products/hemingways-watamu-1-bedroom-ocean-view-suite', bookingUrl: 'https://plekify.com/products/hemingways-watamu-1-bedroom-ocean-view-suite', tier: 'upscale', volumeClass: 'medium', region: 'Africa', distribution: 'direct+ota' },
+  { system: 'plekify', name: 'Plekify · Zannier Omaanda', homepageUrl: 'https://plekify.com/products/zannier-omaanda-1-bedroom-hut', bookingUrl: 'https://plekify.com/products/zannier-omaanda-1-bedroom-hut', tier: 'luxury', volumeClass: 'medium', region: 'Africa', distribution: 'direct+ota' },
 
   // ---------------- SITEMINDER (v1-verified working) ----------------
   { system: 'siteminder', name: 'Ivy City Hotel', homepageUrl: 'https://www.ivycityhotel.com/', tier: 'upscale', volumeClass: 'medium', region: 'North America', distribution: 'direct+ota' },
