@@ -948,6 +948,50 @@ export class CloudbedsHandler extends BaseHandler {
   async studyA(prop) { return GenericHandler.prototype.studyA.call(this, prop); }
 }
 
+/* ---------------- Stayntouch ({prop}.ibe.stayntouch.com Vuetify SPA; date-prefilled deep-link) ----------------
+ * Flow: deep-link /search-results?checkin=MM-DD-YYYY (US format) -> Book Now -> Checkout
+ * -> /checkout (the payment page: multi-step stepper, #payment-container pre-rendered).
+ * We STOP at /checkout (the payment page) — consistent with the other engines — so we do
+ * not fight the Vuetify form-validation gate that blocks the final "Proceed To Payment". */
+export class StayntouchHandler extends BaseHandler {
+  _stDeepLink(prop, checkin, checkout) {
+    const base = new URL(prop.bookingUrl || prop.homepageUrl).origin;
+    const fmt = (iso) => { const [y, m, d] = iso.split('-'); return `${m}-${d}-${y}`; }; // MM-DD-YYYY (US)
+    return `${base}/search-results?checkin=${fmt(checkin)}&checkout=${fmt(checkout)}&adults=2&kids=0`;
+  }
+  async studyB(prop) {
+    const ctx = { paymentReached: false, redirected: false, captcha: false, botWall: false, mandatoryAccountWall: false, error: null };
+    const dates = rollingStudyBDates();
+    try {
+      // start on the property domain, then deep-link to the off-domain IBE (counts handoff)
+      await this.timedGoto(prop.homepageUrl);
+      await sleep(1200);
+      this.m.recordClick(); // guest's Book click -> off-domain
+      await this.timedGoto(this._stDeepLink(prop, dates.checkin, dates.checkout), 'domcontentloaded');
+      await sleep(3000);
+      if (await this.detectCaptcha()) { ctx.captcha = true; return ctx; }
+      // wait for rate cards, click first Book Now -> cart drawer
+      await this.page.locator('.btn-book button.btn-pri-md').first().waitFor({ state: 'visible', timeout: 15000 }).catch(() => {});
+      if (await this.clickEl('.btn-book button.btn-pri-md')) this.m.recordClick();
+      await sleep(2000);
+      // Cart -> Checkout -> /checkout (payment page). Wait for the drawer CTA to mount.
+      const co = this.page.locator('button[aria-label="Checkout"]');
+      await co.first().waitFor({ state: 'visible', timeout: 10000 }).catch(() => {});
+      if (await this.clickEl('button[aria-label="Checkout"]')) this.m.recordClick();
+      // login wall: "Continue Without Login" reveals the guest form on /checkout
+      await this.clickEl('button.changefields.guest-login');
+      await sleep(1500);
+      // payment page reached = /checkout URL + #payment-container present (the hosted-card step lives here)
+      const onCheckout = /\/checkout/i.test(this.page.url());
+      const payContainer = await this.page.locator('#payment-container').first().isVisible({ timeout: 6000 }).catch(() => false);
+      ctx.paymentReached = onCheckout || payContainer;
+      ctx.redirected = this.m.handoffs > 0;
+    } catch (e) { ctx.error = String(e).slice(0, 160); }
+    return ctx;
+  }
+  async studyA(prop) { return GenericHandler.prototype.studyA.call(this, prop); }
+}
+
 /* ---------------- Generic competitor (best-effort) ---------------- */
 export class GenericHandler extends BaseHandler {
   async studyB(prop) {
@@ -996,8 +1040,9 @@ export const REGISTRY = {
   siteminder: SiteMinderHandler,
   cloudbeds: CloudbedsHandler,
   mews: MewsHandler,
+  stayntouch: StayntouchHandler,
   generic: GenericHandler,
   roomraccoon: GenericHandler,
-  stayntouch: GenericHandler, opera: GenericHandler,
+  opera: GenericHandler,
   booking: GenericHandler, airbnb: GenericHandler, expedia: GenericHandler, travelstart: GenericHandler,
 };
