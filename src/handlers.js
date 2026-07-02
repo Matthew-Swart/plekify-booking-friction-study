@@ -415,6 +415,8 @@ export class SiteMinderHandler extends BaseHandler {
         await this._smPickVSelect(`input[placeholder="${placeholder}"]`);
       }
       await sleep(500);
+      // capture the guest-form fields BEFORE advancing the stepper (they vanish after Continue)
+      await this.m.detectFields(this.page);
 
       // 6. Continue -> step3 (T&Cs + final proceed-to-payment).
       const continueBtn = this.page.locator('button[data-sm-test="guest-details-continue"]');

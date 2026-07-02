@@ -20,16 +20,16 @@ assert race, "race section not found"
 # value from this-morning valid runs (Mews's distributor changed mid-session).
 racers = [
     dict(name="Plekify", badge="On-domain · Shop Pay · UCP agent-ready",
-         friction_score="10.9", success_rate="100%", clicks="4", handoffs="0", fields="8",
+         friction_score="10.9", success_rate="100%", clicks="4", handoffs="0", fields="22",
          duration="19s", payment="Shop Pay", status="finished", highlighted=True),
     dict(name="Mews", badge="Channel handoff · ARS 1.9",
          friction_score="16.6", success_rate="67%", clicks="9", handoffs="1", fields="—",
          duration="—", payment="card", status="finished", highlighted=False),
     dict(name="NightsBridge", badge="Channel handoff · ARS 1.4",
-         friction_score="22.9", success_rate="100%", clicks="7", handoffs="1", fields="—",
+         friction_score="22.9", success_rate="100%", clicks="7", handoffs="1", fields="16",
          duration="—", payment="card", status="finished", highlighted=False),
     dict(name="SiteMinder", badge="Channel handoff · ARS 1.5",
-         friction_score="23.1", success_rate="100%", clicks="4.3", handoffs="1", fields="—",
+         friction_score="29.4", success_rate="100%", clicks="4.3", handoffs="1", fields="14",
          duration="—", payment="card", status="finished", highlighted=False),
 ]
 exhibits = [
@@ -59,3 +59,27 @@ race["settings"]["intro"] = (
 json.dump(d, open(P, "w"), indent=2)
 print("Race locked to real v2. Racers:", [b["settings"]["name"] for b in blocks.values()])
 print("Numbers:", {s["name"]: s["friction_score"] for s in (racers)})
+
+# ---- ARS chart: clearer why-0-3 explanation + plain-English tier labels ----
+d = json.load(open(P))
+for s in d["sections"].values():
+    if s.get("type") == "plekify-v10-ars-chart":
+        s.setdefault("settings", {})
+        s["settings"]["intro"] = (
+            "Agent-Readiness is scored 0–3 because it is the weighted sum of six machine-checked signals "
+            "— structured data, robots/bot posture, CAPTCHA/WAF friction, express payments, public API, and "
+            "protocol adherence — each rated 0 to 3. 3 means an autonomous agent can discover and complete a "
+            "booking on the open web; 0 means it is hard-blocked. Plekify is the only system with a live "
+            "Universal Commerce Protocol manifest, so it is the only one an AI booking agent can actually use."
+        )
+        s["settings"]["legend"] = (
+            "Scale in plain English — 3 Open: an agent can read the catalog and transact freely, no private deal. "
+            "2 Partial: a machine-readable surface exists but with gaps (e.g. open API, no express payments). "
+            "1 Gated: closed/partner API and bot-defended — an agent is blocked or needs a private contract. "
+            "0 Blocked: a hard bot-wall, login/ID wall, or no machine surface. Plekify 3.0 = Open; the OTAs and "
+            "RoomRaccoon sit at Gated/Blocked. Six signals, each 0–3, weighted; the full rubric and every raw "
+            "signal are in the open repository."
+        )
+        break
+json.dump(d, open(P, "w"), indent=2)
+print("ARS chart intro + legend updated (why-0-3 + plain-English tiers)")

@@ -55,19 +55,26 @@ export class Metrics {
   markNavEnd() { if (this._navMark) { this.latencySec += (Date.now() - this._navMark) / 1000; this._navMark = 0; } }
 
   async detectFields(page) {
+    // Count visible editable fields across the main frame AND all iframes
+    // (Mews's guest form lives inside an iframe — main-frame-only misses it).
     try {
-      this.fields = await page.evaluate(() => {
-        const els = Array.from(document.querySelectorAll('input, select, textarea'));
-        return els.filter((e) => {
-          const t = (e.type || '').toLowerCase();
-          if (['hidden', 'submit', 'button', 'image', 'reset'].includes(t)) return false;
-          if (e.disabled || e.readOnly) return false;
-          const r = e.getBoundingClientRect();
-          if (r.width === 0 && r.height === 0) return false;
-          return true;
-        }).length;
-      });
-    } catch { this.fields = 0; }
+      let total = 0;
+      for (const fr of page.frames()) {
+        const n = await fr.evaluate(() => {
+          const els = Array.from(document.querySelectorAll('input, select, textarea'));
+          return els.filter((e) => {
+            const t = (e.type || '').toLowerCase();
+            if (['hidden', 'submit', 'button', 'image', 'reset'].includes(t)) return false;
+            if (e.disabled || e.readOnly) return false;
+            const r = e.getBoundingClientRect();
+            if (r.width === 0 && r.height === 0) return false;
+            return true;
+          }).length;
+        }).catch(() => 0);
+        total += n;
+      }
+      this.fields = Math.max(this.fields || 0, total); // track MAX seen (multi-step steppers advance past fields)
+    } catch { this.fields = Math.max(this.fields || 0, 0); }
   }
 
   async detectAutocomplete(page) {

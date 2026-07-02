@@ -253,8 +253,8 @@
       "outcomes": {
         "redirected-off-domain": 6
       },
-      "mean_lfi": 23.07,
-      "mean_lfi_itt": 23.07,
+      "mean_lfi": 29.4,
+      "mean_lfi_itt": 29.4,
       "mean_clicks": 4.3,
       "mean_handoffs": 1
     },

@@ -20,7 +20,7 @@
 | **mews** | 9 | 0 | — | 16.4 | — | — | errored:9 |
 | **stayntouch** | 12 | 3 | 7.9 | 14.27 | 3 | 1 | errored:9, redirected-off-domain:3 |
 | **cloudbeds** | 6 | 0 | — | 16.4 | — | — | agent-blocked:4, errored:2 |
-| **siteminder** | 6 | 6 | 23.07 | 23.07 | 4.3 | 1 | redirected-off-domain:6 |
+| **siteminder** | 6 | 6 | 29.4 | 29.4 | 4.3 | 1 | redirected-off-domain:6 |
 | **nightsbridge** | 6 | 6 | 22.93 | 22.93 | 7 | 1 | redirected-off-domain:6 |
 | **roomraccoon** | 8 | 0 | — | 16.4 | — | — | errored:6, agent-blocked:2 |
 | **booking** | 2 | 0 | — | 16.4 | — | — | agent-blocked:2 |
