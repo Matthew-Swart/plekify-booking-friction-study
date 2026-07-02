@@ -1,0 +1,33 @@
+{
+  "system": "stayntouch",
+  "property": "Hotel 1620 Plymouth Harbor",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 1,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "errored",
+  "reason": "did-not-reach-payment",
+  "clicks": 3,
+  "handoffs": 1,
+  "fields": 0,
+  "latencySec": 8.4,
+  "interruptions": 0,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 2,
+  "measuredLfi": 11.6,
+  "scoredLfi": 16.4,
+  "completionPct": 0,
+  "durationSec": 23,
+  "commit": "e7ba18d",
+  "ts": "2026-07-02T15:31:53.197Z",
+  "origins": [
+    "https://www.hotel1620.com",
+    "https://hotel1620.ibe.stayntouch.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

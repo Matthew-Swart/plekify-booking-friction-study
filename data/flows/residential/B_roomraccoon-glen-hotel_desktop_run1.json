@@ -1,0 +1,32 @@
+{
+  "system": "roomraccoon",
+  "property": "Glen Hotel",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 1,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "errored",
+  "reason": "did-not-reach-payment",
+  "clicks": 2,
+  "handoffs": 0,
+  "fields": 0,
+  "latencySec": 1.54,
+  "interruptions": 0,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 0,
+  "measuredLfi": 2,
+  "scoredLfi": 16.4,
+  "completionPct": 0,
+  "durationSec": 21.4,
+  "commit": "e7ba18d",
+  "ts": "2026-07-02T15:50:05.711Z",
+  "origins": [
+    "https://glenhotel.co.za"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

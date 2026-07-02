@@ -1,0 +1,33 @@
+{
+  "system": "mews",
+  "property": "Victoria Palace Hotel",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 2,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "errored",
+  "reason": "no available date pair",
+  "clicks": 3,
+  "handoffs": 1,
+  "fields": 0,
+  "latencySec": 3.61,
+  "interruptions": 0,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 1,
+  "measuredLfi": 10.6,
+  "scoredLfi": 16.4,
+  "completionPct": 0,
+  "durationSec": 99.5,
+  "commit": "36eb9b4",
+  "ts": "2026-07-02T14:29:18.668Z",
+  "origins": [
+    "https://www.victoriapalace.com",
+    "https://app.mews.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

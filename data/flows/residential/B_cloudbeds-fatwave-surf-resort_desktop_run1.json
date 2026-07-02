@@ -11,7 +11,7 @@
   "clicks": 2,
   "handoffs": 1,
   "fields": 0,
-  "latencySec": 3.21,
+  "latencySec": 3.24,
   "interruptions": 1,
   "autocomplete": false,
   "accelerated": false,
@@ -19,9 +19,9 @@
   "measuredLfi": 20.4,
   "scoredLfi": 16.4,
   "completionPct": 0,
-  "durationSec": 10.6,
-  "commit": "ea615ec",
-  "ts": "2026-07-02T12:31:02.920Z",
+  "durationSec": 10.7,
+  "commit": "e7ba18d",
+  "ts": "2026-07-02T15:36:04.385Z",
   "origins": [
     "https://www.fatwavesurfresort.com",
     "https://hotels.cloudbeds.com"

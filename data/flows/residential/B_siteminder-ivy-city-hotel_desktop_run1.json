@@ -11,7 +11,7 @@
   "clicks": 4,
   "handoffs": 1,
   "fields": 0,
-  "latencySec": 2.62,
+  "latencySec": 2,
   "interruptions": 1,
   "autocomplete": false,
   "accelerated": false,
@@ -19,9 +19,9 @@
   "measuredLfi": 22.4,
   "scoredLfi": 22.4,
   "completionPct": 8.4,
-  "durationSec": 37,
-  "commit": "143df63",
-  "ts": "2026-07-02T12:36:54.651Z",
+  "durationSec": 35.8,
+  "commit": "e7ba18d",
+  "ts": "2026-07-02T15:22:30.229Z",
   "origins": [
     "https://www.ivycityhotel.com",
     "https://direct-book.com"

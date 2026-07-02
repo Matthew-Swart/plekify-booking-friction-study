@@ -1,0 +1,9 @@
+{
+  "deepLink": "https://americanamotorhotel.ibe.stayntouch.com/search-results?checkin=08-16-2026&checkout=08-18-2026&adults=2&kids=0",
+  "steps": [
+    "goto search-results"
+  ],
+  "paymentReached": false,
+  "blocker": "Next Step disabled — telephone or Country field not satisfying Vuetify validation",
+  "finalUrl": "https://americanamotorhotel.ibe.stayntouch.com/checkout"
+}

@@ -11,7 +11,7 @@
   "clicks": 4,
   "handoffs": 1,
   "fields": 0,
-  "latencySec": 2.05,
+  "latencySec": 2.17,
   "interruptions": 1,
   "autocomplete": false,
   "accelerated": false,
@@ -19,9 +19,9 @@
   "measuredLfi": 22.4,
   "scoredLfi": 22.4,
   "completionPct": 8.4,
-  "durationSec": 36.7,
-  "commit": "ea615ec",
-  "ts": "2026-07-02T12:30:11.620Z",
+  "durationSec": 36.9,
+  "commit": "e7ba18d",
+  "ts": "2026-07-02T15:25:50.167Z",
   "origins": [
     "https://www.tremola-sangottardo.ch",
     "https://direct-book.com"

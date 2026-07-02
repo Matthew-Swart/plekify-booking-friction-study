@@ -1,0 +1,33 @@
+{
+  "system": "mews",
+  "property": "Sun & Ski Inn",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 1,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "errored",
+  "reason": "no available date pair",
+  "clicks": 3,
+  "handoffs": 1,
+  "fields": 0,
+  "latencySec": 4.92,
+  "interruptions": 0,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 1,
+  "measuredLfi": 10.6,
+  "scoredLfi": 16.4,
+  "completionPct": 0,
+  "durationSec": 105.8,
+  "commit": "36eb9b4",
+  "ts": "2026-07-02T14:38:45.378Z",
+  "origins": [
+    "https://www.sunandskiinn.com",
+    "https://app.mews.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

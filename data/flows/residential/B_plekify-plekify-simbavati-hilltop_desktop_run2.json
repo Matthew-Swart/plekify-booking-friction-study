@@ -11,7 +11,7 @@
   "clicks": 4,
   "handoffs": 0,
   "fields": 22,
-  "latencySec": 1.27,
+  "latencySec": 0.95,
   "interruptions": 0,
   "autocomplete": true,
   "accelerated": true,
@@ -19,9 +19,9 @@
   "measuredLfi": 10.9,
   "scoredLfi": 10.9,
   "completionPct": 29.5,
-  "durationSec": 18.8,
-  "commit": "7337a97",
-  "ts": "2026-07-02T10:53:05.648Z",
+  "durationSec": 18.1,
+  "commit": "486dee1",
+  "ts": "2026-07-02T15:13:58.532Z",
   "origins": [
     "https://plekify.com"
   ],

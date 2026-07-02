@@ -1,0 +1,32 @@
+{
+  "system": "booking",
+  "property": "Booking.com · Plaza Athénée",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 1,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "agent-blocked",
+  "reason": "mandatory-account-or-id",
+  "clicks": 0,
+  "handoffs": 0,
+  "fields": 0,
+  "latencySec": 0.64,
+  "interruptions": 1,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 1,
+  "measuredLfi": 10.8,
+  "scoredLfi": 16.4,
+  "completionPct": 0,
+  "durationSec": 2.7,
+  "commit": "e7ba18d",
+  "ts": "2026-07-02T15:38:55.700Z",
+  "origins": [
+    "https://www.booking.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

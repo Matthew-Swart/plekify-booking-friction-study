@@ -11,7 +11,7 @@
   "clicks": 7,
   "handoffs": 1,
   "fields": 16,
-  "latencySec": 3.85,
+  "latencySec": 7.95,
   "interruptions": 0,
   "autocomplete": false,
   "accelerated": false,
@@ -19,9 +19,9 @@
   "measuredLfi": 22.6,
   "scoredLfi": 22.6,
   "completionPct": 10.6,
-  "durationSec": 18.5,
-  "commit": "a1b77a9",
-  "ts": "2026-07-02T12:10:53.881Z",
+  "durationSec": 22.7,
+  "commit": "e7ba18d",
+  "ts": "2026-07-02T15:17:59.308Z",
   "origins": [
     "https://atlanticviewcapetown.com",
     "https://book.nightsbridge.com"

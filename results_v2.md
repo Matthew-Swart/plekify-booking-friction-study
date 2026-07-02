@@ -17,10 +17,16 @@
 | System | n | reached-payment | mean LFI (payment) | mean LFI (ITT) | clicks | handoffs | outcomes |
 |---|---:|---:|---:|---:|---:|---:|---|
 | **plekify** | 7 | 6 | 10.9 | 18.97 | 4 | 0 | reached-payment:6, errored:1 |
-| **mews** | 12 | 8 | 16.85 | 16.7 | 9 | 1 | redirected-off-domain:8, errored:4 |
+| **mews** | 9 | 0 | — | 16.4 | — | — | errored:9 |
+| **stayntouch** | 12 | 3 | 7.9 | 14.27 | 3 | 1 | errored:9, redirected-off-domain:3 |
 | **cloudbeds** | 6 | 0 | — | 16.4 | — | — | agent-blocked:4, errored:2 |
 | **siteminder** | 6 | 6 | 23.07 | 23.07 | 4.3 | 1 | redirected-off-domain:6 |
-| **nightsbridge** | 6 | 6 | 16.6 | 16.6 | 6.2 | 0.17 | redirected-off-domain:1, reached-payment:5 |
+| **nightsbridge** | 6 | 6 | 22.93 | 22.93 | 7 | 1 | redirected-off-domain:6 |
+| **roomraccoon** | 8 | 0 | — | 16.4 | — | — | errored:6, agent-blocked:2 |
+| **booking** | 2 | 0 | — | 16.4 | — | — | agent-blocked:2 |
+| **airbnb** | 2 | 0 | — | 16.4 | — | — | agent-blocked:2 |
+| **expedia** | 2 | 0 | — | 16.4 | — | — | agent-blocked:2 |
+| **travelstart** | 2 | 0 | — | 16.4 | — | — | errored:2 |
 
 ## Agent Readiness (ARS, 0–3, higher = better) — v2 fresh probes, both egresses
 

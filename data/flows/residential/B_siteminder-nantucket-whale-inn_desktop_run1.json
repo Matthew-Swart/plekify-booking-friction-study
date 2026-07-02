@@ -11,7 +11,7 @@
   "clicks": 5,
   "handoffs": 1,
   "fields": 0,
-  "latencySec": 2.94,
+  "latencySec": 3.38,
   "interruptions": 1,
   "autocomplete": false,
   "accelerated": false,
@@ -19,9 +19,9 @@
   "measuredLfi": 24.4,
   "scoredLfi": 24.4,
   "completionPct": 6.7,
-  "durationSec": 39.3,
-  "commit": "ea615ec",
-  "ts": "2026-07-02T12:28:12.446Z",
+  "durationSec": 39.8,
+  "commit": "e7ba18d",
+  "ts": "2026-07-02T15:23:51.161Z",
   "origins": [
     "https://www.nantucketwhaleinn.com",
     "https://direct-book.com"

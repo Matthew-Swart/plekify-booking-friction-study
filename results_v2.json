@@ -223,6 +223,18 @@
     }
   },
   "friction_v2": {
+    "roomraccoon": {
+      "n": 8,
+      "n_payment": 0,
+      "outcomes": {
+        "errored": 6,
+        "agent-blocked": 2
+      },
+      "mean_lfi": null,
+      "mean_lfi_itt": 16.4,
+      "mean_clicks": null,
+      "mean_handoffs": null
+    },
     "plekify": {
       "n": 7,
       "n_payment": 6,
@@ -246,28 +258,27 @@
       "mean_clicks": 4.3,
       "mean_handoffs": 1
     },
+    "stayntouch": {
+      "n": 12,
+      "n_payment": 3,
+      "outcomes": {
+        "errored": 9,
+        "redirected-off-domain": 3
+      },
+      "mean_lfi": 7.9,
+      "mean_lfi_itt": 14.27,
+      "mean_clicks": 3,
+      "mean_handoffs": 1
+    },
     "nightsbridge": {
       "n": 6,
       "n_payment": 6,
       "outcomes": {
-        "redirected-off-domain": 1,
-        "reached-payment": 5
+        "redirected-off-domain": 6
       },
-      "mean_lfi": 16.6,
-      "mean_lfi_itt": 16.6,
-      "mean_clicks": 6.2,
-      "mean_handoffs": 0.17
-    },
-    "mews": {
-      "n": 12,
-      "n_payment": 8,
-      "outcomes": {
-        "redirected-off-domain": 8,
-        "errored": 4
-      },
-      "mean_lfi": 16.85,
-      "mean_lfi_itt": 16.7,
-      "mean_clicks": 9,
+      "mean_lfi": 22.93,
+      "mean_lfi_itt": 22.93,
+      "mean_clicks": 7,
       "mean_handoffs": 1
     },
     "cloudbeds": {
@@ -276,6 +287,61 @@
       "outcomes": {
         "agent-blocked": 4,
         "errored": 2
+      },
+      "mean_lfi": null,
+      "mean_lfi_itt": 16.4,
+      "mean_clicks": null,
+      "mean_handoffs": null
+    },
+    "mews": {
+      "n": 9,
+      "n_payment": 0,
+      "outcomes": {
+        "errored": 9
+      },
+      "mean_lfi": null,
+      "mean_lfi_itt": 16.4,
+      "mean_clicks": null,
+      "mean_handoffs": null
+    },
+    "travelstart": {
+      "n": 2,
+      "n_payment": 0,
+      "outcomes": {
+        "errored": 2
+      },
+      "mean_lfi": null,
+      "mean_lfi_itt": 16.4,
+      "mean_clicks": null,
+      "mean_handoffs": null
+    },
+    "expedia": {
+      "n": 2,
+      "n_payment": 0,
+      "outcomes": {
+        "agent-blocked": 2
+      },
+      "mean_lfi": null,
+      "mean_lfi_itt": 16.4,
+      "mean_clicks": null,
+      "mean_handoffs": null
+    },
+    "booking": {
+      "n": 2,
+      "n_payment": 0,
+      "outcomes": {
+        "agent-blocked": 2
+      },
+      "mean_lfi": null,
+      "mean_lfi_itt": 16.4,
+      "mean_clicks": null,
+      "mean_handoffs": null
+    },
+    "airbnb": {
+      "n": 2,
+      "n_payment": 0,
+      "outcomes": {
+        "agent-blocked": 2
       },
       "mean_lfi": null,
       "mean_lfi_itt": 16.4,

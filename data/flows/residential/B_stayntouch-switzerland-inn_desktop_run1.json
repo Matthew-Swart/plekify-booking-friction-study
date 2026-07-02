@@ -1,0 +1,33 @@
+{
+  "system": "stayntouch",
+  "property": "Switzerland Inn",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 1,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "redirected-off-domain",
+  "reason": "payment-on-third-party-domain",
+  "clicks": 3,
+  "handoffs": 1,
+  "fields": 8,
+  "latencySec": 7.16,
+  "interruptions": 0,
+  "autocomplete": true,
+  "accelerated": false,
+  "pageCount": 2,
+  "measuredLfi": 7.9,
+  "scoredLfi": 7.9,
+  "completionPct": 23.8,
+  "durationSec": 16.6,
+  "commit": "e7ba18d",
+  "ts": "2026-07-02T15:30:59.556Z",
+  "origins": [
+    "https://www.switzerlandinn.com",
+    "https://switzerlandinn.ibe.stayntouch.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

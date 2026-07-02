@@ -1,0 +1,33 @@
+{
+  "system": "mews",
+  "property": "MUSA Lago di Como",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 2,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "errored",
+  "reason": "no available date pair",
+  "clicks": 3,
+  "handoffs": 1,
+  "fields": 0,
+  "latencySec": 2.09,
+  "interruptions": 0,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 2,
+  "measuredLfi": 11.6,
+  "scoredLfi": 16.4,
+  "completionPct": 0,
+  "durationSec": 104.2,
+  "commit": "36eb9b4",
+  "ts": "2026-07-02T14:25:54.359Z",
+  "origins": [
+    "https://musacomo.com",
+    "https://app.mews.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}

@@ -1,0 +1,1552 @@
+{
+  "url": "https://americanamotorhotel.ibe.stayntouch.com/search-results?checkin=08-16-2026&checkout=08-18-2026&adults=2&kids=0",
+  "inputs": [
+    {
+      "tag": "select",
+      "id": "sort_by",
+      "class": "form-control",
+      "type": "select-one",
+      "name": "sortedBy",
+      "aria": "Sort by price",
+      "text": "Low to High High to Low",
+      "vis": true
+    }
+  ],
+  "buttons": [
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "submit",
+      "name": null,
+      "aria": "Cart",
+      "text": "1 Cart",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "submit",
+      "name": null,
+      "aria": "Book Now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md btn-close",
+      "type": "button",
+      "name": null,
+      "aria": "Close",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "Edit Mini 1st Floor 1 Full Bed Room",
+      "text": "Edit",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "remove-btn",
+      "type": "button",
+      "name": null,
+      "aria": "Remove Mini 1st Floor 1 Full Bed Room",
+      "text": "Remove",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "carousel-arrow prev-arrow",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "carousel-arrow next-arrow",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Add",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Add",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Add",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md cancel",
+      "type": "button",
+      "name": null,
+      "aria": "Remove all items from cart",
+      "text": "Remove All",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Continue browsing",
+      "text": "Continue Browsing",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md btn-close",
+      "type": "button",
+      "name": null,
+      "aria": "Close",
+      "text": "Close",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Checkout",
+      "text": "Checkout",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "sort-icon",
+      "type": "submit",
+      "name": null,
+      "aria": "Modify search collapse",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "input-block",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Arrival Date Sun, 16 Aug 2026",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "input-block",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Departure Date Tue, 18 Aug 2026",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "input-block select-field",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Adults 2",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "input-block select-field",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Kids 0",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "submit",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "add-promo-btn",
+      "type": "button",
+      "name": null,
+      "aria": "Add Promo Code",
+      "text": "Add Promo Code",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "add-promo-btn",
+      "type": "button",
+      "name": null,
+      "aria": "Add Group Code",
+      "text": "Add Group Code",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "add-promo-btn",
+      "type": "button",
+      "name": null,
+      "aria": "Add Access Code",
+      "text": "Add Access Code",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": "update-promotions",
+      "class": "btn-pri-md",
+      "type": "submit",
+      "name": null,
+      "aria": "Update",
+      "text": "Update",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "apply-btn",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Apply",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cancel-btn",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Close",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "plans",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Sort Rate Plans",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "read-text",
+      "type": "button",
+      "name": null,
+      "aria": "Read more",
+      "text": "Read More",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "plans",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Sort Rate Plans",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "read-text",
+      "type": "button",
+      "name": null,
+      "aria": "Read more",
+      "text": "Read More",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "plans",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Sort Rate Plans",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "read-text",
+      "type": "button",
+      "name": null,
+      "aria": "Read more",
+      "text": "Read More",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "plans",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Sort Rate Plans",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "read-text",
+      "type": "button",
+      "name": null,
+      "aria": "Read more",
+      "text": "Read More",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "plans",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Sort Rate Plans",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "read-text",
+      "type": "button",
+      "name": null,
+      "aria": "Read more",
+      "text": "Read More",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "cs-icon icon-info_outline",
+      "type": "submit",
+      "name": null,
+      "aria": "Rate plan description",
+      "text": "",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": "View Policies",
+      "text": "View Policies",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "",
+      "type": "button",
+      "name": null,
+      "aria": null,
+      "text": "Price Details",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "btn-pri-md",
+      "type": "button",
+      "name": null,
+      "aria": "Book now",
+      "text": "Book Now",
+      "vis": true
+    },
+    {
+      "tag": "button",
+      "id": null,
+      "class": "inclusion-label",
+      "type": "submit",
+      "name": null,
+      "aria": null,
+      "text": "Inclusions",
+      "vis": false
+    }
+  ],
+  "links": [],
+  "headings": [
+    {
+      "tag": "h1",
+      "id": "main",
+      "class": "skip-to-content",
+      "type": null,
+      "name": null,
+      "aria": null,
+      "text": "Book Your Stay",
+      "vis": true
+    },
+    {
+      "tag": "h2",
+      "id": null,
+      "class": "sort-heading",
+      "type": null,
+      "name": null,
+      "aria": null,
+      "text": "Sort Rooms By",
+      "vis": true
+    },
+    {
+      "tag": "h2",
+      "id": null,
+      "class": "",
+      "type": null,
+      "name": null,
+      "aria": null,
+      "text": "5 results found",
+      "vis": true
+    }
+  ],
+  "iframes": [
+    {
+      "tag": "iframe",
+      "id": null,
+      "class": "",
+      "type": null,
+      "name": null,
+      "aria": null,
+      "text": "",
+      "vis": true
+    }
+  ]
+}

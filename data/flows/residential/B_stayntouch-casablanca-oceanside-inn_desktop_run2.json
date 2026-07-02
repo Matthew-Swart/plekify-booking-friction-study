@@ -1,0 +1,33 @@
+{
+  "system": "stayntouch",
+  "property": "Casablanca Oceanside Inn",
+  "study": "B",
+  "viewport": "desktop",
+  "run": 2,
+  "egress": "residential",
+  "geo": "ZA",
+  "outcome": "errored",
+  "reason": "did-not-reach-payment",
+  "clicks": 3,
+  "handoffs": 1,
+  "fields": 0,
+  "latencySec": 6.34,
+  "interruptions": 0,
+  "autocomplete": false,
+  "accelerated": false,
+  "pageCount": 2,
+  "measuredLfi": 11.6,
+  "scoredLfi": 16.4,
+  "completionPct": 0,
+  "durationSec": 25.7,
+  "commit": "e7ba18d",
+  "ts": "2026-07-02T15:33:17.207Z",
+  "origins": [
+    "https://casablancaoceansideinn.com",
+    "https://casablancaoceansideinn.ibe.stayntouch.com"
+  ],
+  "dates": {
+    "checkin": "2026-08-16",
+    "checkout": "2026-08-18"
+  }
+}
