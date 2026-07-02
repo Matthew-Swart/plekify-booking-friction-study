@@ -493,7 +493,7 @@ export class MewsHandler extends BaseHandler {
     const norm = (s) => (s || '').toLowerCase().replace(/[éèê]/g, 'e');
     const target = typeof monthNameOrIdx === 'number' ? monthNameOrIdx : (MONTHS[norm(monthNameOrIdx)] ?? MONTHS[String(monthNameOrIdx).toLowerCase()]);
     if (target == null) return false;
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 5; i++) { // cap at 5 months — T+45 is <=2 months out; never scroll into the future
       const hit = await dframe.evaluate(({ target, year, MONTHS, norm }) => {
         const days = [...document.querySelectorAll('button[aria-label]')]
           .map((b) => b.getAttribute('aria-label') || '')

@@ -77,7 +77,14 @@ async function main() {
           process.stdout.write(`  [${egress}/${vp}] ${prop.system} · ${prop.name} · ${sv} #${r} ... `);
           let ctx;
           try {
-            ctx = sv === 'B' ? await handler.studyB(prop) : await handler.studyA(prop);
+            // HARD per-run wall-clock cap — no single run can ever hang the machine.
+            // If a flow loops (e.g. a site-side change breaks date selection), it is
+            // killed at 150s and recorded as errored/run-timeout, then the context closes.
+            const RUN_TIMEOUT_MS = 150000;
+            ctx = await Promise.race([
+              sv === 'B' ? handler.studyB(prop) : handler.studyA(prop),
+              new Promise((_, rej) => setTimeout(() => rej(new Error('run-timeout (>150s)')), RUN_TIMEOUT_MS)),
+            ]);
           } catch (e) { ctx = { paymentReached: false, redirected: false, captcha: false, botWall: false, mandatoryAccountWall: false, error: String(e).slice(0, 160) }; }
           const durationSec = Number(((Date.now() - t0) / 1000).toFixed(1));
 
