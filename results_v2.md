@@ -12,6 +12,16 @@
 | **siteminder** | 60 | 80% | **11.35** | 10.64–12.06 | 10.7 | 1 | 2.75 |
 | **nightsbridge** | 60 | 60% | **17.18** | 16.24–18.13 | 12.8 | 1 | 2 |
 
+## Friction (v2 FRESH flows — 2026-07 headed residential, real grounded LFI)
+
+| System | n | reached-payment | mean LFI (payment) | mean LFI (ITT) | clicks | handoffs | outcomes |
+|---|---:|---:|---:|---:|---:|---:|---|
+| **plekify** | 7 | 6 | 10.9 | 18.97 | 4 | 0 | reached-payment:6, errored:1 |
+| **mews** | 12 | 8 | 16.85 | 16.7 | 9 | 1 | redirected-off-domain:8, errored:4 |
+| **cloudbeds** | 6 | 0 | — | 16.4 | — | — | agent-blocked:4, errored:2 |
+| **siteminder** | 6 | 6 | 23.07 | 23.07 | 4.3 | 1 | redirected-off-domain:6 |
+| **nightsbridge** | 6 | 6 | 16.6 | 16.6 | 6.2 | 0.17 | redirected-off-domain:1, reached-payment:5 |
+
 ## Agent Readiness (ARS, 0–3, higher = better) — v2 fresh probes, both egresses
 
 | System | ARS residential | ARS datacenter | Cloud-agent Δ | SD | BM | CW | AP | API | PA |

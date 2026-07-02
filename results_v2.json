@@ -221,5 +221,66 @@
       "API": 0,
       "PA": 1
     }
+  },
+  "friction_v2": {
+    "plekify": {
+      "n": 7,
+      "n_payment": 6,
+      "outcomes": {
+        "reached-payment": 6,
+        "errored": 1
+      },
+      "mean_lfi": 10.9,
+      "mean_lfi_itt": 18.97,
+      "mean_clicks": 4,
+      "mean_handoffs": 0
+    },
+    "siteminder": {
+      "n": 6,
+      "n_payment": 6,
+      "outcomes": {
+        "redirected-off-domain": 6
+      },
+      "mean_lfi": 23.07,
+      "mean_lfi_itt": 23.07,
+      "mean_clicks": 4.3,
+      "mean_handoffs": 1
+    },
+    "nightsbridge": {
+      "n": 6,
+      "n_payment": 6,
+      "outcomes": {
+        "redirected-off-domain": 1,
+        "reached-payment": 5
+      },
+      "mean_lfi": 16.6,
+      "mean_lfi_itt": 16.6,
+      "mean_clicks": 6.2,
+      "mean_handoffs": 0.17
+    },
+    "mews": {
+      "n": 12,
+      "n_payment": 8,
+      "outcomes": {
+        "redirected-off-domain": 8,
+        "errored": 4
+      },
+      "mean_lfi": 16.85,
+      "mean_lfi_itt": 16.7,
+      "mean_clicks": 9,
+      "mean_handoffs": 1
+    },
+    "cloudbeds": {
+      "n": 6,
+      "n_payment": 0,
+      "outcomes": {
+        "agent-blocked": 4,
+        "errored": 2
+      },
+      "mean_lfi": null,
+      "mean_lfi_itt": 16.4,
+      "mean_clicks": null,
+      "mean_handoffs": null
+    }
   }
 }

@@ -119,6 +119,29 @@ systems_order = ["plekify", "mews", "stayntouch", "cloudbeds", "siteminder", "ni
 results = {"formula": "F = C + 6.6H + Fld_excess + P + 9.8I − 3.7A − 5.4Acc (P=page-count; A not measured in v1)",
            "friction_source": "v1 276-run dataset re-scored under grounded weights (profitroom excluded)",
            "ars_source": "v2 fresh probes (residential egress)", "friction": friction_summary, "ars": ars_out}
+
+# ---- 1b. v2 FRESH flows (real 2026-07 headed residential runs) ----
+import glob
+friction_v2 = {}
+for egress_dir in glob.glob(os.path.join(ROOT, "data", "flows", "*")):
+    for f in glob.glob(os.path.join(egress_dir, "*.json")):
+        try: r = json.load(open(f))
+        except: continue
+        if r.get("study") != "B": continue
+        friction_v2.setdefault(r["system"].lower(), []).append(r)
+fv2 = {}
+for sys, rows in friction_v2.items():
+    pay = [r for r in rows if r.get("outcome") in ("reached-payment", "redirected-off-domain")]
+    pay_lfi = [r["scoredLfi"] for r in pay if r.get("scoredLfi") is not None]
+    all_lfi = [r["scoredLfi"] for r in rows if r.get("scoredLfi") is not None]
+    outcomes = {}
+    for r in rows: outcomes[r.get("outcome")] = outcomes.get(r.get("outcome"), 0) + 1
+    fv2[sys] = dict(n=len(rows), n_payment=len(pay), outcomes=outcomes,
+                    mean_lfi=round(statistics.mean(pay_lfi), 2) if pay_lfi else None,
+                    mean_lfi_itt=round(statistics.mean(all_lfi), 2) if all_lfi else None,
+                    mean_clicks=round(statistics.mean([r["clicks"] for r in pay]), 1) if pay else None,
+                    mean_handoffs=round(statistics.mean([r["handoffs"] for r in pay]), 2) if pay else None)
+results["friction_v2"] = fv2
 json.dump(results, open(OUT_JSON, "w"), indent=2)
 
 # CSV
@@ -144,6 +167,13 @@ for sys in systems_order:
     ci = fr.get("lfi_ci95") or [None, None]
     cistr = f"{ci[0]}–{ci[1]}" if ci[0] is not None else "—"
     L.append(f"| **{sys}** | {fr['n_runs']} | {fr['success_rate']:.0f}% | **{fr['mean_lfi_success']}** | {cistr} | {fr['mean_completion_pct']} | {fr['mean_handoffs']} | {fr['mean_pages']} |")
+L.append("\n## Friction (v2 FRESH flows — 2026-07 headed residential, real grounded LFI)\n")
+L.append("| System | n | reached-payment | mean LFI (payment) | mean LFI (ITT) | clicks | handoffs | outcomes |\n|---|---:|---:|---:|---:|---:|---:|---|")
+for sys in systems_order:
+    v = fv2.get(sys)
+    if not v: continue
+    oc = ", ".join(f"{k}:{n}" for k, n in v["outcomes"].items())
+    L.append(f"| **{sys}** | {v['n']} | {v['n_payment']} | {v['mean_lfi'] if v['mean_lfi'] is not None else '—'} | {v['mean_lfi_itt']} | {v['mean_clicks'] if v['mean_clicks'] is not None else '—'} | {v['mean_handoffs'] if v['mean_handoffs'] is not None else '—'} | {oc} |")
 L.append("\n## Agent Readiness (ARS, 0–3, higher = better) — v2 fresh probes, both egresses\n")
 L.append("| System | ARS residential | ARS datacenter | Cloud-agent Δ | SD | BM | CW | AP | API | PA |\n|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
 for sys in systems_order:
