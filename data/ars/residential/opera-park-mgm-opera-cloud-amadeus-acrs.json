@@ -1,0 +1,55 @@
+{
+  "system": "opera",
+  "name": "Park MGM (OPERA Cloud + Amadeus ACRS)",
+  "egress": "residential",
+  "geo": "ZA",
+  "ip": "102.182.190.248",
+  "org": "AS37611 AFRIHOST SP (PTY) LTD",
+  "commit": "3d81d1f",
+  "ts": "2026-07-02T10:02:07.248Z",
+  "homepageUrl": "https://parkmgm.mgmresorts.com/en.html",
+  "bookingUrl": "https://parkmgm.mgmresorts.com/en/hotel.html",
+  "ucpManifest": false,
+  "ars": 1.05,
+  "signals": {
+    "SD": 0,
+    "BM": 0,
+    "CW": 3,
+    "AP": 1,
+    "API": 1,
+    "PA": 1
+  },
+  "evidence": {
+    "SD": {
+      "error": "Error: page.evaluate: Execution context was destroyed, most likely because of a navigation",
+      "blocks": 0
+    },
+    "BM": {
+      "error": "TimeoutError: apiRequestContext.get: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - → GET https://parkmgm.mgmresorts.com/robots.txt\u001b[22m\n\u001b[2m    - user-agent: Mozi"
+    },
+    "CW": {
+      "status": null,
+      "visCaptcha": false,
+      "widget": false,
+      "text": false,
+      "defensive": false,
+      "blocked": false
+    },
+    "AP": {
+      "source": "dom",
+      "shopPay": false,
+      "applePay": false,
+      "googlePay": false,
+      "paypal": false
+    },
+    "API": {
+      "foundPortal": false,
+      "knownPosture": 1,
+      "probed": 5
+    },
+    "PA": {
+      "a2a": false,
+      "aiPlugin": false
+    }
+  }
+}

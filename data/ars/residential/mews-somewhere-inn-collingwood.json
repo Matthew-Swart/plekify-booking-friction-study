@@ -1,0 +1,65 @@
+{
+  "system": "mews",
+  "name": "Somewhere Inn Collingwood",
+  "egress": "residential",
+  "geo": "ZA",
+  "ip": "102.182.190.248",
+  "org": "AS37611 AFRIHOST SP (PTY) LTD",
+  "commit": "3d81d1f",
+  "ts": "2026-07-02T09:59:40.633Z",
+  "homepageUrl": "https://somewhereinn.ca/collingwood/",
+  "bookingUrl": "https://app.mews.com/distributor/43156a17-4491-458d-8f08-b0c8009b6e0d",
+  "ucpManifest": false,
+  "ars": 1.75,
+  "signals": {
+    "SD": 0,
+    "BM": 2,
+    "CW": 3,
+    "AP": 1,
+    "API": 3,
+    "PA": 1
+  },
+  "evidence": {
+    "SD": {
+      "source": "json-ld",
+      "jsonLdBlocks": 0,
+      "types": [],
+      "hasLodging": false,
+      "hasOffer": false,
+      "hasPrice": false,
+      "hasAvailability": false
+    },
+    "BM": {
+      "status": 200,
+      "robotsBytes": 189,
+      "blockedAi": [],
+      "agentPositive": false,
+      "wildcardBlock": false,
+      "blocksSearch": false
+    },
+    "CW": {
+      "status": 200,
+      "visCaptcha": false,
+      "widget": false,
+      "text": false,
+      "defensive": false,
+      "blocked": false
+    },
+    "AP": {
+      "source": "dom",
+      "shopPay": false,
+      "applePay": false,
+      "googlePay": false,
+      "paypal": false
+    },
+    "API": {
+      "foundPortal": false,
+      "knownPosture": 3,
+      "probed": 5
+    },
+    "PA": {
+      "a2a": false,
+      "aiPlugin": false
+    }
+  }
+}

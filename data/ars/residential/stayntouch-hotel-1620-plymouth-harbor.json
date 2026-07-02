@@ -1,0 +1,60 @@
+{
+  "system": "stayntouch",
+  "name": "Hotel 1620 Plymouth Harbor",
+  "egress": "residential",
+  "geo": "ZA",
+  "ip": "102.182.190.248",
+  "org": "AS37611 AFRIHOST SP (PTY) LTD",
+  "commit": "3d81d1f",
+  "ts": "2026-07-02T10:01:17.887Z",
+  "homepageUrl": "https://www.hotel1620.com/",
+  "bookingUrl": "https://hotel1620.ibe.stayntouch.com/",
+  "ucpManifest": false,
+  "ars": 1.6,
+  "signals": {
+    "SD": 0,
+    "BM": 1,
+    "CW": 3,
+    "AP": 1,
+    "API": 3,
+    "PA": 1
+  },
+  "evidence": {
+    "SD": {
+      "error": "Error: page.evaluate: Execution context was destroyed, most likely because of a navigation",
+      "blocks": 0
+    },
+    "BM": {
+      "status": 200,
+      "robotsBytes": 442,
+      "blockedAi": [],
+      "agentPositive": false,
+      "wildcardBlock": false,
+      "blocksSearch": true
+    },
+    "CW": {
+      "status": 200,
+      "visCaptcha": false,
+      "widget": false,
+      "text": false,
+      "defensive": false,
+      "blocked": false
+    },
+    "AP": {
+      "source": "dom",
+      "shopPay": false,
+      "applePay": false,
+      "googlePay": false,
+      "paypal": false
+    },
+    "API": {
+      "foundPortal": false,
+      "knownPosture": 3,
+      "probed": 5
+    },
+    "PA": {
+      "a2a": false,
+      "aiPlugin": false
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "formula": "F = C + 6.6H + Fld_excess + P + 9.8I \u2212 3.7A \u2212 5.4Acc (P=page-count; A not measured in v1)",
+  "friction_source": "v1 276-run dataset re-scored under grounded weights (profitroom excluded)",
+  "ars_source": "v2 fresh probes (residential egress)",
+  "friction": {
+    "nightsbridge": {
+      "n_runs": 60,
+      "n_success": 36,
+      "success_rate": 60.0,
+      "mean_lfi_success": 17.18,
+      "lfi_ci95": [
+        16.24,
+        18.13
+      ],
+      "mean_lfi_itt": 16.87,
+      "mean_completion_pct": 12.8,
+      "mean_clicks": 8.6,
+      "mean_handoffs": 1,
+      "mean_pages": 2
+    },
+    "siteminder": {
+      "n_runs": 60,
+      "n_success": 48,
+      "success_rate": 80.0,
+      "mean_lfi_success": 11.35,
+      "lfi_ci95": [
+        10.64,
+        12.06
+      ],
+      "mean_lfi_itt": 12.36,
+      "mean_completion_pct": 10.7,
+      "mean_clicks": 1.5,
+      "mean_handoffs": 1,
+      "mean_pages": 2.75
+    },
+    "cloudbeds": {
+      "n_runs": 60,
+      "n_success": 18,
+      "success_rate": 30.0,
+      "mean_lfi_success": 10.27,
+      "lfi_ci95": [
+        8.19,
+        12.29
+      ],
+      "mean_lfi_itt": 14.56,
+      "mean_completion_pct": 14.9,
+      "mean_clicks": 2.8,
+      "mean_handoffs": 0.5,
+      "mean_pages": 2.5
+    },
+    "plekify": {
+      "n_runs": 36,
+      "n_success": 34,
+      "success_rate": 94.0,
+      "mean_lfi_success": 5.03,
+      "lfi_ci95": [
+        4.71,
+        5.35
+      ],
+      "mean_lfi_itt": 5.66,
+      "mean_completion_pct": 23.1,
+      "mean_clicks": 3.6,
+      "mean_handoffs": 0,
+      "mean_pages": 1.41
+    }
+  },
+  "ars": {
+    "siteminder": {
+      "n": 4,
+      "ars": 1.5,
+      "SD": 0,
+      "BM": 3,
+      "CW": 3,
+      "AP": 1,
+      "API": 1,
+      "PA": 1
+    },
+    "cloudbeds": {
+      "n": 3,
+      "ars": 2.03,
+      "SD": 0.67,
+      "BM": 3,
+      "CW": 2.67,
+      "AP": 1,
+      "API": 3,
+      "PA": 1.67
+    },
+    "plekify": {
+      "n": 3,
+      "ars": 3,
+      "SD": 3,
+      "BM": 3,
+      "CW": 3,
+      "AP": 3,
+      "API": 3,
+      "PA": 3
+    }
+  }
+}
