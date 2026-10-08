@@ -59,7 +59,7 @@ v1 measured **human-click friction** across 5 PMS booking engines (276 runs, 23 
 | Protagonist | **Plekify** (Shopify) | The system under sponsor; baseline |
 | Core PMS / channel mgr | **SiteMinder**, **Cloudbeds**, **NightsBridge**, **RoomRaccoon** | Recognizable incumbents. RoomRaccoon is retained *as an agent-blocked exhibit*, not excluded. |
 | HIA-relevant PMS | **Mews**, **Stayntouch**, **OPERA** (if a drivable public booking flow exists) | Named HIA/Acumatica-integrated PMSs (doc 50 §15.1); resonate with the 7 Jul audience. Stayntouch's export pattern mirrors Plekify's folio→GL batch. |
-| OTAs / marketplaces | **Booking.com**, **Airbnb**, **Expedia**, **Travelstart** | The platforms a guest actually compares direct booking against; make the direct-vs-OTA argument concrete. |
+| OTAs / marketplaces | **Booking.com**, **Airbnb**, **Expedia**, **Travelstart**, **LekkeSlaap** *(added 2026-10-08)* | The platforms a guest actually compares direct booking against; make the direct-vs-OTA argument concrete. LekkeSlaap (South Africa) is an OTA on its own platform (no iframe/hand-off); its Reserve step is Cloudflare-Turnstile-gated, so it resolves to the errored/ITT 16.4 class rather than a reached payment. |
 
 **Excluded:** ProfitRoom (low strategic resonance for the HIA audience).
 
@@ -273,7 +273,7 @@ The §8.1 `Fld` term sampled visible form fields at the navigation instant. On S
 | Property selection | Unstratified | Coarsened Exact Matching |
 | Confidence intervals | None | Cluster-bootstrap BCa + Rosenbaum/E-value |
 | Axis | Human friction only | + Agent-Readiness Score (6 signals) |
-| Systems | 5 PMS | + HIA PMS (Mews/Stayntouch/OPERA) + OTAs (Booking/Airbnb/Expedia/Travelstart); ProfitRoom dropped |
+| Systems | 5 PMS | + HIA PMS (Mews/Stayntouch/OPERA) + OTAs (Booking/Airbnb/Expedia/Travelstart/LekkeSlaap); ProfitRoom dropped |
 | Egress | Mis-stated (claimed Hetzner, was SA laptop) | SA residential (human) + Hetzner datacenter (agent), recorded per run |
 | Language | Python runner (framework now lost) | Node/Playwright runner + Python analysis |
 

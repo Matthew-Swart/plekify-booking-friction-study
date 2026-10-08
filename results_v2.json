@@ -395,5 +395,18 @@
       "mean_clicks": 12,
       "mean_handoffs": 2
     }
+  },
+  "friction_v2_2026_10_08": {
+    "lekkeslaap": {
+      "n": 3,
+      "n_payment": 0,
+      "outcomes": {
+        "errored": 3
+      },
+      "mean_lfi": null,
+      "mean_lfi_itt": 16.4,
+      "mean_clicks": null,
+      "mean_handoffs": null
+    }
   }
 }

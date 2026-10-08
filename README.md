@@ -13,7 +13,7 @@ v2 closes the three defensibility gaps of v1 (Phase 5b):
 2. **Intent-to-Treat handling of agent-blocks** — CAPTCHA/bot-walls are a first-class outcome with a timeout penalty, not an exclusion (RoomRaccoon becomes an exhibit, not a footnote).
 3. **A second axis — Agent Readiness (ARS)**: whether an autonomous agent can discover and complete a booking on the open web (Shopify-UCP frame), measured across 6 signals (structured data, robots/bot posture, CAPTCHA/WAF friction, express payments, public API, protocol adherence).
 
-**Systems (v2):** Plekify + SiteMinder, Cloudbeds, NightsBridge, RoomRaccoon (agent-blocked exhibit) + Mews, Stayntouch, OPERA-ecosystem + Booking.com, Airbnb, Expedia, Travelstart. ProfitRoom dropped.
+**Systems (v2):** Plekify + SiteMinder, Cloudbeds, NightsBridge, RoomRaccoon (agent-blocked exhibit) + Mews, Stayntouch, OPERA-ecosystem + Booking.com, Airbnb, Expedia, Travelstart, LekkeSlaap (South African OTA, own-platform checkout, Cloudflare Turnstile-gated Reserve; added 2026-10-08, ITT 16.4 class). ProfitRoom dropped.
 
 **Results:** [`results_v2.md`](./results_v2.md) · [`results_v2.csv`](./results_v2.csv) · [`results_v2.json`](./results_v2.json)
 
