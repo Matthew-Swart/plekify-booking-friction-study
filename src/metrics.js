@@ -57,10 +57,23 @@ export class Metrics {
   async detectFields(page) {
     // Count visible editable fields across the main frame AND all iframes
     // (Mews's guest form lives inside an iframe — main-frame-only misses it).
+    //
+    // 2026-10-07 fix (doc 255 §7): a sample taken at the navigation instant on SPA
+    // checkouts (Angular/Vue) landed before the form had rendered — bimodal readings
+    // (2 vs 23 vs 71) — and PCI payment iframes that re-list the host form's fields
+    // double-counted (the 71). Two changes: (1) settle before sampling (networkidle,
+    // capped, then a short render wait); (2) dedup same-signature inputs ACROSS frames
+    // so an iframe re-listing the host fields is not counted twice. Duplicate
+    // signatures WITHIN one frame are distinct fields and still count.
+    try {
+      await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
+      await new Promise((r) => setTimeout(r, 1500)); // post-render settle
+    } catch { /* settle is best-effort — never fatal */ }
     try {
       let total = 0;
+      const seen = new Set();
       for (const fr of page.frames()) {
-        const n = await fr.evaluate(() => {
+        const sigs = await fr.evaluate(() => {
           const els = Array.from(document.querySelectorAll('input, select, textarea'));
           return els.filter((e) => {
             const t = (e.type || '').toLowerCase();
@@ -69,9 +82,18 @@ export class Metrics {
             const r = e.getBoundingClientRect();
             if (r.width === 0 && r.height === 0) return false;
             return true;
-          }).length;
-        }).catch(() => 0);
-        total += n;
+          }).map((e) => {
+            const nm = e.getAttribute('name') || e.id || e.getAttribute('autocomplete') || e.getAttribute('placeholder') || e.getAttribute('aria-label') || '';
+            return nm ? `${e.tagName.toLowerCase()}:${nm.toLowerCase()}` : '';
+          });
+        }).catch(() => []);
+        const inFrame = new Set();
+        for (const s of sigs) {
+          if (!s) { total++; continue; }              // unnamed — cannot match, always count
+          if (inFrame.has(s)) { total++; continue; }  // dup within frame — distinct instance
+          if (seen.has(s)) continue;                  // same name in an earlier frame — PCI re-list, drop
+          inFrame.add(s); seen.add(s); total++;
+        }
       }
       this.fields = Math.max(this.fields || 0, total); // track MAX seen (multi-step steppers advance past fields)
     } catch { this.fields = Math.max(this.fields || 0, 0); }

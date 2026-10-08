@@ -258,6 +258,10 @@ Lognormal two-sample test on the ratio; solve n = 2σ²(z_{1−α/2}+z_{1−β})
 
 No change to systems, properties, formula, outcome taxonomy, or analysis plan after the first v2 run without a **dated, public amendment** appended to this file and the CHANGELOG. Pre-registration timestamp = the commit hash of the frozen protocol.
 
+### Amendment 2026-10-07 — Fld sampling settle + cross-frame dedup (doc 255 §7)
+
+The §8.1 `Fld` term sampled visible form fields at the navigation instant. On SPA checkouts (Angular/Vue) that landed before the form rendered → bimodal readings (2 vs 23 vs 71); the 71 also double-counted PCI payment iframes that re-list the host form's fields. The metric collector (`src/metrics.js::detectFields`) now (a) **settles before sampling** — `waitForLoadState('networkidle')` capped at 5 s, then a 1.5 s render wait — and (b) **dedups same-signature inputs across frames** (name || id || autocomplete || placeholder || aria-label): an input re-listed by an iframe is counted once, while duplicate signatures *within* one frame remain distinct fields. Affects `Fld_excess` and therefore LFI/FIDPM for SPA checkouts only. Recorded here per §14; applies from the v2.1 (2026-10-07 OTA retest) lane onward. The locked v2 dataset is unchanged.
+
 ---
 
 ## 15. v1 → v2 changelog (summary)

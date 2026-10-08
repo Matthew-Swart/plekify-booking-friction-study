@@ -58,7 +58,9 @@ export const PROPERTIES = [
   { system: 'booking', name: 'Booking.com · Plaza Athénée', homepageUrl: 'https://www.booking.com/', bookingUrl: 'https://www.booking.com/hotel/fr/ha-tel-plaza-atha-c-na-c-e-paris.html', tier: 'luxury', volumeClass: 'high', region: 'Europe', distribution: 'ota' },
   { system: 'airbnb', name: 'Airbnb · Camps Bay villa', homepageUrl: 'https://www.airbnb.com/', bookingUrl: 'https://www.airbnb.com/rooms/31030250', tier: 'luxury', volumeClass: 'high', region: 'Africa', distribution: 'ota' },
   { system: 'expedia', name: 'Expedia · Burj Al Arab', homepageUrl: 'https://www.expedia.com/', bookingUrl: 'https://www.expedia.com/Dubai-Hotels-Burj-Al-Arab-Jumeirah.h527497.Hotel-Information', tier: 'luxury', volumeClass: 'high', region: 'Asia', distribution: 'ota' },
-  { system: 'travelstart', name: 'Travelstart · Cape Town search', homepageUrl: 'https://www.travelstart.co.za/', bookingUrl: 'https://www.travelstart.co.za/accommodation/in/cape-town-western-cape-south-africa', tier: 'midscale', volumeClass: 'high', region: 'Africa', distribution: 'ota' },
+  // 2026-10-07: Travelstart's legacy .co.za accommodation surface (…/accommodation/<slug>) is
+  // site-down; live surface per founder = https://www.travelstart.com/accommodation. No slug invented.
+  { system: 'travelstart', name: 'Travelstart · Cape Town search', homepageUrl: 'https://www.travelstart.com/', bookingUrl: 'https://www.travelstart.com/accommodation', tier: 'midscale', volumeClass: 'high', region: 'Africa', distribution: 'ota' },
 ];
 
 export const VIEWPORTS = {

@@ -348,5 +348,52 @@
       "mean_clicks": null,
       "mean_handoffs": null
     }
+  },
+  "friction_v2_2026_10_07": {
+    "booking": {
+      "n": 3,
+      "n_payment": 3,
+      "outcomes": {
+        "reached-payment": 3
+      },
+      "mean_lfi": 147.27,
+      "mean_lfi_itt": 147.27,
+      "mean_clicks": 17,
+      "mean_handoffs": 1
+    },
+    "airbnb": {
+      "n": 2,
+      "n_payment": 0,
+      "outcomes": {
+        "agent-blocked": 2
+      },
+      "mean_lfi": null,
+      "mean_lfi_itt": 16.4,
+      "mean_clicks": null,
+      "mean_handoffs": null
+    },
+    "expedia": {
+      "n": 2,
+      "n_payment": 0,
+      "outcomes": {
+        "agent-blocked": 2
+      },
+      "mean_lfi": null,
+      "mean_lfi_itt": 16.4,
+      "mean_clicks": null,
+      "mean_handoffs": null
+    },
+    "travelstart": {
+      "n": 4,
+      "n_payment": 1,
+      "outcomes": {
+        "errored": 3,
+        "reached-payment": 1
+      },
+      "mean_lfi": 30.2,
+      "mean_lfi_itt": 19.85,
+      "mean_clicks": 12,
+      "mean_handoffs": 2
+    }
   }
 }
